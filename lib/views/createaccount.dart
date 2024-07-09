@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import this for input formatters
+import 'package:flutter/services.dart';
+import 'package:velopay/views/accountconfirm.dart'; // Ensure this path is correct
 
 void main() {
   runApp(CreateAccount());
@@ -68,10 +69,8 @@ class CreateAccount extends StatelessWidget {
                         TextFormField(
                           keyboardType: TextInputType.number,
                           inputFormatters: [
-                            FilteringTextInputFormatter
-                                .digitsOnly, // Allow only digits
-                            LengthLimitingTextInputFormatter(
-                                11), // Limit to 11 digits
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(11),
                           ],
                           decoration: InputDecoration(
                             labelText: 'Phone number',
@@ -81,9 +80,7 @@ class CreateAccount extends StatelessWidget {
                             prefixIcon: Icon(Icons.phone),
                           ),
                           validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                value.length != 11) {
+                            if (value == null || value.isEmpty || value.length != 11) {
                               return 'Please enter exactly 11 digits';
                             }
                             return null;
@@ -103,7 +100,9 @@ class CreateAccount extends StatelessWidget {
                         ),
                         SizedBox(height: 150),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // Add functionality for login navigation if needed
+                          },
                           child: Text(
                             'Already have an account? Log in',
                             style: TextStyle(
@@ -115,21 +114,25 @@ class CreateAccount extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // Corrected: Navigation happens here in the onPressed
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => AccountConfirm()),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             padding: EdgeInsets.symmetric(vertical: 20),
                             textStyle: TextStyle(fontSize: 23),
-                            minimumSize:
-                                Size(double.infinity, 60), // Full width
+                            minimumSize: Size(double.infinity, 60), // Full width
                           ),
                           child: Text(
                             'Continue',
                             style: TextStyle(
-                                color: Colors
-                                    .white,fontWeight: FontWeight.bold), // Set the text color to white
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
