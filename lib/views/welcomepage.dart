@@ -48,17 +48,17 @@ class Onboarding extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: 812,
+          height: 800,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(color: const Color(0xFFD5D7DE)),
           child: Stack(
             children: [
               Positioned(
                 left: 3,
-                top: 182,
+                top: 120,
                 child: Container(
                   width: 408,
-                  height: 646,
+                  height: 685,
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -69,7 +69,7 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 185,
-                top: 342,
+                top: 280,
                 child: Container(
                   width: 56,
                   height: 78,
@@ -108,8 +108,8 @@ class Onboarding extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 185,
-                top: 442,
+                left: 178,
+                top: 365,
                 child: Container(
                   width: 50,
                   height: 5,
@@ -178,7 +178,7 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 120,
-                top: 316,
+                top: 250,
                 child: Text(
                   'Welcome to VeloPay!',
                   textAlign: TextAlign.center,
@@ -193,7 +193,7 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 40,
-                top: 667,
+                top: 620,
                 child: GestureDetector(
                   onTap: () {
                     // Navigate to sign up screen
@@ -235,7 +235,7 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 40,
-                top: 717,
+                top: 670,
                 child: GestureDetector(
                   onTap: () {
                     // Navigate to log in screen
@@ -276,7 +276,7 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 40,
-                top: 560,
+                top: 500,
                 width: 336,
                 child: Text(
                   'By tapping “sign up” or ”Log in”, you agree to our terms. learn more about how we process your data in our privacy policy and cookies policy.',
@@ -292,7 +292,7 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 40,
-                top: 467,
+                top: 407,
                 width: 336,
                 child: Text(
                   'To get started, please log in to your account or sign up for a new one. ',
