@@ -92,7 +92,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     _controller.forward();
 
     // Navigate to Splashscreen.dart after 5 seconds
-    Future.delayed(Duration(seconds: 15), () {
+    Future.delayed(Duration(seconds: 8), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => Splashscreen()),
       );

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:velopay/views/Homes/homepage.dart';
 import 'package:velopay/views/accountconfirm.dart';
-import 'package:velopay/views/loginaccount.dart'; // Ensure this path is correct
+import 'package:velopay/views/createaccount.dart'; // Make sure the path to your CreateAccount page is correct
 
 void main() {
-  runApp(CreateAccount());
+  runApp(LoginAccount());
 }
 
-class CreateAccount extends StatelessWidget {
-  CreateAccount({Key? key}) : super(key: key);
+class LoginAccount extends StatelessWidget {
+  LoginAccount({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +21,7 @@ class CreateAccount extends StatelessWidget {
           iconTheme: IconThemeData(color: Color.fromARGB(255, 249, 247, 246)),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(),
           ),
         ),
         backgroundColor: Colors.orange,
@@ -32,7 +31,7 @@ class CreateAccount extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 80, bottom: 40),
                 child: Text(
-                  'Create Account',
+                  'Login Account',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -43,15 +42,10 @@ class CreateAccount extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.75),
-                  padding:
-                      EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
+                  padding: EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30)),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
                   ),
                   child: SingleChildScrollView(
                     child: Column(
@@ -65,29 +59,8 @@ class CreateAccount extends StatelessWidget {
                             hintText: 'Enter your email address',
                             border: OutlineInputBorder(),
                             prefixIcon: Icon(Icons.email),
-                            suffixIcon: Icon(Icons.help_outline),  
+                            suffixIcon: Icon(Icons.help_outline), 
                           ),
-                        ),
-                        SizedBox(height: 20),
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(11),
-                          ],
-                          decoration: InputDecoration(
-                            labelText: 'Phone number',
-                            labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                            hintText: '+234',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.phone),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty || value.length != 11) {
-                              return 'Please enter exactly 11 digits';
-                            }
-                            return null;
-                          },
                         ),
                         SizedBox(height: 20),
                         TextFormField(
@@ -101,20 +74,36 @@ class CreateAccount extends StatelessWidget {
                           ),
                           obscureText: true,
                         ),
-                        SizedBox(height: 150),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: () {
+                              // Add functionality for forgot password here
+                            },
+                            child: Text(
+                              'Forgot password?',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 200), // Adjust space as needed
                         TextButton(
                           onPressed: () {
                             // Implement navigation to the CreateAccount page
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => LoginAccount()),
+                              MaterialPageRoute(builder: (context) => CreateAccount()),
                             );
                           },
                           child: Text(
-                            'Already have an account? Log in',
+                            'Don’t you have an account? Sign up',
                             style: TextStyle(
                                 color: Colors.black,
-                                decoration: TextDecoration.none,
+                                decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
@@ -125,7 +114,7 @@ class CreateAccount extends StatelessWidget {
                             // Corrected: Navigation happens here in the onPressed
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => AccountConfirm()),
+                              MaterialPageRoute(builder: (context) => HomePage()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -136,7 +125,7 @@ class CreateAccount extends StatelessWidget {
                             minimumSize: Size(double.infinity, 60), // Full width
                           ),
                           child: Text(
-                            'Continue',
+                            'Login',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),

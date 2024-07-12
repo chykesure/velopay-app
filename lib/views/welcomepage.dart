@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:velopay/views/createaccount.dart';
+import 'package:velopay/views/loginaccount.dart';
 
 void main() {
   runApp(const WelcomePage());
@@ -241,7 +242,7 @@ class Onboarding extends StatelessWidget {
                     // Navigate to log in screen
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateAccount()),
+                      MaterialPageRoute(builder: (context) => LoginAccount()),
                     );
                   },
                   child: Container(
