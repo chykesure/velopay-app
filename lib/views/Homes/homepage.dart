@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -34,10 +39,43 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _navigateToPaymentPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PaymentPage()),
+  Widget _buildNavItem(IconData icon, int index) {
+    return IconButton(
+      icon: Icon(
+        icon,
+        color: _selectedIndex == index ? Colors.orange : Colors.black,
+      ),
+      onPressed: () => _onItemTapped(index),
+    );
+  }
+
+  Widget _buildServiceButton(String label, IconData icon) {
+    return Container(
+      width: 80, // Fixed width for equal size
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F5F5), // Light grey background color
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: Colors.orange,
+            size: 30,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.center, // Center align the text
+          ),
+        ],
+      ),
     );
   }
 
@@ -50,143 +88,190 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         automaticallyImplyLeading: false,
       ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: constraints.maxHeight,
-              ),
-              child: IntrinsicHeight(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 42,
-                            backgroundImage: AssetImage('images/pas.jpg'),
-                            onBackgroundImageError: (exception, stackTrace) {},
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: RichText(
-                              text: TextSpan(
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'Welcome Chyke ',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '👋\n\nWhat bill would you like to pay?',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 42,
+                          backgroundImage: AssetImage('images/pas.jpg'),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: RichText(
+                            text: const TextSpan(
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
                               ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Welcome Chyke ',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      '👋\n\nWhat bill would you like to pay?',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 70),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Total Balance',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'NGN ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                _isBalanceVisible ? '7,200,000.00' : '***',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              IconButton(
+                                icon: Icon(
+                                  _isBalanceVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.white,
+                                ),
+                                onPressed: _toggleVisibility,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {}, // Navigate to PaymentPage
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors
+                                  .transparent, // Transparent background color
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 10),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize
+                                  .min, // Adjust the size to fit content
+                              children: [
+                                Text('Fund Wallet'),
+                                SizedBox(
+                                    width:
+                                        8), // Space between the text and the icon
+                                Icon(Icons.add, color: Colors.white),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 70),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Total Balance',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'NGN ',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  _isBalanceVisible ? '70,000,000.00' : '***',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                IconButton(
-                                  icon: Icon(
-                                    _isBalanceVisible ? Icons.visibility : Icons.visibility_off,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: _toggleVisibility,
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 20),
-                            ElevatedButton.icon(
-                              onPressed: _navigateToPaymentPage, // Navigate to PaymentPage
-                              icon: Icon(Icons.add, color: Colors.orange),
-                              label: Text('Fund Wallet'),
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor: Colors.orange, backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 100), // Adjust to give space for the bottom navigation bar
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 30), // Adjust the height as needed
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _buildServiceButton('Airtime', Icons.phone),
+                        _buildServiceButton('Data', Icons.wifi),
+                        _buildServiceButton('CableTV', Icons.tv),
+                        _buildServiceButton('More', Icons.more_horiz),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        },
+          ),
+          Positioned(
+            top: 16,
+            right: 16,
+            child: Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                border: Border.all(
+                  color: const Color.fromARGB(255, 158, 157, 157),
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.notifications_none,
+                    color: Colors.black, size: 34),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 10.0,
+        color: const Color.fromARGB(255, 244, 239, 239),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            _buildNavItem(Icons.home, 0),
+            _buildNavItem(Icons.miscellaneous_services, 1),
+            const SizedBox(width: 48.0), // Adjusted for space around FAB
+            _buildNavItem(Icons.payment, 2),
+            _buildNavItem(Icons.person, 3),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.orange,
+        onPressed: () {},
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        child: const Icon(Icons.qr_code_scanner),
       ),
     );
   }
 }
 
-class PaymentPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment Page'),
-        backgroundColor: Colors.orange,
-      ),
-      body: Center(
-        child: Text('This is the Payment Page'),
-      ),
-    );
-  }
-}
