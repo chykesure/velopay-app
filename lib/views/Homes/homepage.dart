@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:velopay/views/Homes/RecentActivityItem.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +25,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isBalanceVisible = true;
+  bool _showAllActivities = false;
   int _selectedIndex = 0;
+
+  final List<Map<String, String>> _activities = [
+    {'title': 'Data', 'amount': 'N9800.10', 'cardInfo': 'MASTERCARD **** 3241', 'date': '09/12/24'},
+    {'title': 'Light', 'amount': 'N2800.00', 'cardInfo': 'MASTERCARD **** 3241', 'date': '02/02/24'},
+    {'title': 'Airtime', 'amount': 'N1800.00', 'cardInfo': 'MASTERCARD **** 3241', 'date': '02/02/24'},
+  ];
 
   void _toggleVisibility() {
     setState(() {
@@ -33,51 +40,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _onItemTapped(int index) {
+  void _toggleActivityView() {
     setState(() {
-      _selectedIndex = index;
+      _showAllActivities = !_showAllActivities;
     });
   }
 
-  Widget _buildNavItem(IconData icon, int index) {
-    return IconButton(
-      icon: Icon(
-        icon,
-        color: _selectedIndex == index ? Colors.orange : Colors.black,
-      ),
-      onPressed: () => _onItemTapped(index),
-    );
-  }
+  void _onItemTapped(int index) {
+  setState(() {
+    _selectedIndex = index;
+  });
+}
 
-  Widget _buildServiceButton(String label, IconData icon) {
-    return Container(
-      width: 80, // Fixed width for equal size
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5), // Light grey background color
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            color: Colors.orange,
-            size: 30,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-            ),
-            textAlign: TextAlign.center, // Center align the text
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,24 +81,15 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: RichText(
                             text: const TextSpan(
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
+                              style: TextStyle(fontSize: 16, color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: 'Welcome Chyke ',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 18,
-                                  ),
+                                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
                                 ),
                                 TextSpan(
-                                  text:
-                                      '👋\n\nWhat bill would you like to pay?',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
+                                  text: '👋\n\nWhat bill would you like to pay?',
+                                  style: TextStyle(fontSize: 16),
                                 ),
                               ],
                             ),
@@ -145,10 +110,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           const Text(
                             'Total Balance',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
+                            style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           const SizedBox(height: 10),
                           Row(
@@ -156,26 +118,16 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               const Text(
                                 'NGN ',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 _isBalanceVisible ? '7,200,000.00' : '***',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(width: 10),
                               IconButton(
                                 icon: Icon(
-                                  _isBalanceVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                  _isBalanceVisible ? Icons.visibility : Icons.visibility_off,
                                   color: Colors.white,
                                 ),
                                 onPressed: _toggleVisibility,
@@ -184,25 +136,20 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton(
-                            onPressed: () {}, // Navigate to PaymentPage
+                            onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
-                              backgroundColor: Colors
-                                  .transparent, // Transparent background color
+                              backgroundColor: Colors.transparent,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
+                              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                             ),
                             child: Row(
-                              mainAxisSize: MainAxisSize
-                                  .min, // Adjust the size to fit content
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text('Fund Wallet'),
-                                SizedBox(
-                                    width:
-                                        8), // Space between the text and the icon
+                                SizedBox(width: 8),
                                 Icon(Icons.add, color: Colors.white),
                               ],
                             ),
@@ -210,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30), // Adjust the height as needed
+                    const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -219,6 +166,35 @@ class _HomePageState extends State<HomePage> {
                         _buildServiceButton('CableTV', Icons.tv),
                         _buildServiceButton('More', Icons.more_horiz),
                       ],
+                    ),
+                    const SizedBox(height: 55),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Recent Activity',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        TextButton(
+                          onPressed: _toggleActivityView,
+                          child: Text(
+                            _showAllActivities ? 'Hide all' : 'See all',
+                            style: TextStyle(color: Colors.orange),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 5),
+                    Column(
+                      children: _activities
+                          .take(_showAllActivities ? _activities.length : 1)
+                          .map((activity) => RecentActivityItem(
+                                title: activity['title']!,
+                                amount: activity['amount']!,
+                                cardInfo: activity['cardInfo']!,
+                                date: activity['date']!,
+                              ))
+                          .toList(),
                     ),
                   ],
                 ),
@@ -239,8 +215,7 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: IconButton(
-                icon: const Icon(Icons.notifications_none,
-                    color: Colors.black, size: 34),
+                icon: const Icon(Icons.notifications_none, color: Colors.black, size: 34),
                 onPressed: () {},
               ),
             ),
@@ -256,7 +231,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             _buildNavItem(Icons.home, 0),
             _buildNavItem(Icons.miscellaneous_services, 1),
-            const SizedBox(width: 48.0), // Adjusted for space around FAB
+            const SizedBox(width: 48.0),
             _buildNavItem(Icons.payment, 2),
             _buildNavItem(Icons.person, 3),
           ],
@@ -267,11 +242,50 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.orange,
         onPressed: () {},
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
         child: const Icon(Icons.qr_code_scanner),
       ),
     );
   }
-}
 
+  Widget _buildNavItem(IconData icon, int index) {
+    return IconButton(
+      icon: Icon(
+        icon,
+        color: _selectedIndex == index ? Colors.orange : Colors.black,
+      ),
+      onPressed: () => _onItemTapped(index),
+    );
+  }
+
+  Widget _buildServiceButton(String label, IconData icon) {
+    return Container(
+      width: 80,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF5F5F5),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: Colors.orange,
+            size: 30,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+}
