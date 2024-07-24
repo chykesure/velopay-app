@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:velopay/views/Homes/RecentActivityItem.dart';
+import 'package:intl/intl.dart';
+import 'package:velopay/views/Homes/mywallet.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,9 +31,24 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final List<Map<String, String>> _activities = [
-    {'title': 'Data', 'amount': 'N9800.10', 'cardInfo': 'MASTERCARD **** 3241', 'date': '09/12/24'},
-    {'title': 'Light', 'amount': 'N2800.00', 'cardInfo': 'MASTERCARD **** 3241', 'date': '02/02/24'},
-    {'title': 'Airtime', 'amount': 'N1800.00', 'cardInfo': 'MASTERCARD **** 3241', 'date': '02/02/24'},
+    {
+      'title': 'Data',
+      'amount': 'N9800.10',
+      'cardInfo': 'MASTERCARD **** 3241',
+      'date': '09/12/24'
+    },
+    {
+      'title': 'Light',
+      'amount': 'N2800.00',
+      'cardInfo': 'MASTERCARD **** 3241',
+      'date': '02/02/24'
+    },
+    {
+      'title': 'Airtime',
+      'amount': 'N1800.00',
+      'cardInfo': 'MASTERCARD **** 3241',
+      'date': '02/02/24'
+    },
   ];
 
   void _toggleVisibility() {
@@ -47,14 +64,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onItemTapped(int index) {
-  setState(() {
-    _selectedIndex = index;
-  });
-}
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
+  List<Map<String, String>> _sortedActivities() {
+    List<Map<String, String>> sortedActivities = List.from(_activities);
+    sortedActivities.sort((a, b) {
+      DateTime dateA = DateFormat('dd/MM/yy').parse(a['date']!);
+      DateTime dateB = DateFormat('dd/MM/yy').parse(b['date']!);
+      return dateA.compareTo(dateB);
+    });
+    return sortedActivities;
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, String>> activitiesToShow =
+        _showAllActivities ? _activities : _sortedActivities().take(1).toList();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -81,14 +110,18 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: RichText(
                             text: const TextSpan(
-                              style: TextStyle(fontSize: 16, color: Colors.black),
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: 'Welcome Chyke ',
-                                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 18),
                                 ),
                                 TextSpan(
-                                  text: '👋\n\nWhat bill would you like to pay?',
+                                  text:
+                                      '👋\n\nWhat bill would you like to pay?',
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -118,16 +151,24 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               const Text(
                                 'NGN ',
-                                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 _isBalanceVisible ? '7,200,000.00' : '***',
-                                style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(width: 10),
                               IconButton(
                                 icon: Icon(
-                                  _isBalanceVisible ? Icons.visibility : Icons.visibility_off,
+                                  _isBalanceVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
                                   color: Colors.white,
                                 ),
                                 onPressed: _toggleVisibility,
@@ -143,7 +184,8 @@ class _HomePageState extends State<HomePage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 10),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -173,7 +215,8 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         const Text(
                           'Recent Activity',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         TextButton(
                           onPressed: _toggleActivityView,
@@ -186,8 +229,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 5),
                     Column(
-                      children: _activities
-                          .take(_showAllActivities ? _activities.length : 1)
+                      children: activitiesToShow
                           .map((activity) => RecentActivityItem(
                                 title: activity['title']!,
                                 amount: activity['amount']!,
@@ -215,7 +257,8 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: IconButton(
-                icon: const Icon(Icons.notifications_none, color: Colors.black, size: 34),
+                icon: const Icon(Icons.notifications_none,
+                    color: Colors.black, size: 34),
                 onPressed: () {},
               ),
             ),
@@ -240,7 +283,13 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
-        onPressed: () {},
+        onPressed: () {
+          // Corrected: Navigation happens here in the onPressed
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MyWallet()),
+          );
+        },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
