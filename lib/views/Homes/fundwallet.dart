@@ -16,40 +16,117 @@ class FundWallet extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.orange,
-          iconTheme: IconThemeData(color: Color.fromARGB(255, 249, 247, 246)),
+          title: Text('Fund Wallet'), // Changed from 'Text:' to 'title:'
+          backgroundColor: Colors.grey.withOpacity(0.7),
+          iconTheme: IconThemeData(
+            color: Color.fromARGB(255, 249, 247, 246),
+          ),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.grey.withOpacity(1),
         body: SafeArea(
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 120, bottom: 100),
-                child: Text(
-                  'Login Account',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                padding: EdgeInsets.only(top: 50, bottom: 50),
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: 20), // Set margin for left and right
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      labelText: 'Choose or Add new',
+                      labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                      hintText: 'Fund Wallet ',
+                      border: OutlineInputBorder(),
+                      enabled: false, // Disable the input field
+                    ),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'Option 1',
+                        child: Text('Option 1'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Option 2',
+                        child: Text('Option 2'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Add New',
+                        child: Text('Add New'),
+                      ),
+                    ],
+                    onChanged: null, // Disable selection
                   ),
-                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 2, bottom: 60),
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: 20), // Set margin for left and right
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      labelText: 'Choose smart card',
+                      labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                      hintText: 'Card ',
+                      border: OutlineInputBorder(),
+                      enabled: false, // Disable the input field
+                    ),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'Option 1',
+                        child: Text('Option 1'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Option 2',
+                        child: Text('Option 2'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Add New',
+                        child: Text('Add New'),
+                      ),
+                    ],
+                    onChanged: null, // Disable selection
+                  ),
                 ),
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
+                  padding:
+                      EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
                   ),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.arrow_back),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                            Text(
+                              'Add new Payment method',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                          ],
+                        ),
                         SizedBox(height: 20),
                         TextFormField(
                           decoration: InputDecoration(
@@ -77,7 +154,8 @@ class FundWallet extends StatelessWidget {
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   labelText: 'Expiration date',
-                                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                                  labelStyle:
+                                      TextStyle(fontWeight: FontWeight.bold),
                                   hintText: 'MM/YY',
                                   border: OutlineInputBorder(),
                                 ),
@@ -88,7 +166,8 @@ class FundWallet extends StatelessWidget {
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   labelText: 'CVV',
-                                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                                  labelStyle:
+                                      TextStyle(fontWeight: FontWeight.bold),
                                   hintText: 'XXX',
                                   border: OutlineInputBorder(),
                                 ),
@@ -135,15 +214,19 @@ class FundWallet extends StatelessWidget {
                             // Corrected: Navigation happens here in the onPressed
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => HomePage()),
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                             padding: EdgeInsets.symmetric(vertical: 20),
                             textStyle: TextStyle(fontSize: 23),
-                            minimumSize: Size(double.infinity, 60), // Full width
+                            minimumSize:
+                                Size(double.infinity, 60), // Full width
                           ),
                           child: Text(
                             'Add',
@@ -157,7 +240,7 @@ class FundWallet extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
