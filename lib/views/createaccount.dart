@@ -4,11 +4,11 @@ import 'package:velopay/views/accountconfirm.dart';
 import 'package:velopay/views/loginaccount.dart'; // Ensure this path is correct
 
 void main() {
-  runApp(CreateAccount());
+  runApp(const CreateAccount());
 }
 
 class CreateAccount extends StatelessWidget {
-  CreateAccount({Key? key}) : super(key: key);
+  const CreateAccount({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,9 @@ class CreateAccount extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
-          iconTheme: IconThemeData(color: Color.fromARGB(255, 249, 247, 246)),
+          iconTheme: const IconThemeData(color: Color.fromARGB(255, 249, 247, 246)),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -29,7 +29,7 @@ class CreateAccount extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 80, bottom: 40),
                 child: Text(
                   'Create Account',
@@ -46,8 +46,8 @@ class CreateAccount extends StatelessWidget {
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.75),
                   padding:
-                      EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
-                  decoration: BoxDecoration(
+                      const EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
@@ -57,9 +57,9 @@ class CreateAccount extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Email',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
                             hintText: 'Enter your email address',
@@ -68,14 +68,14 @@ class CreateAccount extends StatelessWidget {
                             suffixIcon: Icon(Icons.help_outline),  
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(11),
                           ],
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Phone number',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
                             hintText: '+234',
@@ -89,9 +89,9 @@ class CreateAccount extends StatelessWidget {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Password',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
                             hintText: 'Set password',
@@ -101,16 +101,16 @@ class CreateAccount extends StatelessWidget {
                           ),
                           obscureText: true,
                         ),
-                        SizedBox(height: 150),
+                        const SizedBox(height: 150),
                         TextButton(
                           onPressed: () {
                             // Implement navigation to the CreateAccount page
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => LoginAccount()),
+                              MaterialPageRoute(builder: (context) => const LoginAccount()),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             'Already have an account? Log in',
                             style: TextStyle(
                                 color: Colors.black,
@@ -119,23 +119,23 @@ class CreateAccount extends StatelessWidget {
                                 fontSize: 18),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
                             // Corrected: Navigation happens here in the onPressed
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => AccountConfirm()),
+                              MaterialPageRoute(builder: (context) => const AccountConfirm()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            padding: EdgeInsets.symmetric(vertical: 20),
-                            textStyle: TextStyle(fontSize: 23),
-                            minimumSize: Size(double.infinity, 60), // Full width
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            textStyle: const TextStyle(fontSize: 23),
+                            minimumSize: const Size(double.infinity, 60), // Full width
                           ),
-                          child: Text(
+                          child: const Text(
                             'Continue',
                             style: TextStyle(
                                 color: Colors.white,

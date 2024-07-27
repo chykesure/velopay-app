@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:velopay/views/Homes/homepage.dart';
-import 'package:velopay/views/accountconfirm.dart';
 import 'package:velopay/views/createaccount.dart'; // Make sure the path to your CreateAccount page is correct
 
 void main() {
-  runApp(LoginAccount());
+  runApp(const LoginAccount());
 }
 
 class LoginAccount extends StatelessWidget {
-  LoginAccount({Key? key}) : super(key: key);
+  const LoginAccount({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +16,9 @@ class LoginAccount extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
-          iconTheme: IconThemeData(color: Color.fromARGB(255, 249, 247, 246)),
+          iconTheme: const IconThemeData(color: Color.fromARGB(255, 249, 247, 246)),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
@@ -28,7 +26,7 @@ class LoginAccount extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 80, bottom: 40),
                 child: Text(
                   'Login Account',
@@ -42,8 +40,8 @@ class LoginAccount extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
                   ),
@@ -51,9 +49,9 @@ class LoginAccount extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Email',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
                             hintText: 'Enter your email address',
@@ -62,9 +60,9 @@ class LoginAccount extends StatelessWidget {
                             suffixIcon: Icon(Icons.help_outline), 
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Password',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
                             hintText: 'Set password',
@@ -80,7 +78,7 @@ class LoginAccount extends StatelessWidget {
                             onPressed: () {
                               // Add functionality for forgot password here
                             },
-                            child: Text(
+                            child: const Text(
                               'Forgot password?',
                               style: TextStyle(
                                   color: Colors.black,
@@ -90,16 +88,16 @@ class LoginAccount extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 200), // Adjust space as needed
+                        const SizedBox(height: 200), // Adjust space as needed
                         TextButton(
                           onPressed: () {
                             // Implement navigation to the CreateAccount page
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => CreateAccount()),
+                              MaterialPageRoute(builder: (context) => const CreateAccount()),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             'Don’t you have an account? Sign up',
                             style: TextStyle(
                                 color: Colors.black,
@@ -108,23 +106,23 @@ class LoginAccount extends StatelessWidget {
                                 fontSize: 18),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
                             // Corrected: Navigation happens here in the onPressed
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => HomePage()),
+                              MaterialPageRoute(builder: (context) => const HomePage()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            padding: EdgeInsets.symmetric(vertical: 20),
-                            textStyle: TextStyle(fontSize: 23),
-                            minimumSize: Size(double.infinity, 60), // Full width
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            textStyle: const TextStyle(fontSize: 23),
+                            minimumSize: const Size(double.infinity, 60), // Full width
                           ),
-                          child: Text(
+                          child: const Text(
                             'Login',
                             style: TextStyle(
                                 color: Colors.white,

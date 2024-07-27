@@ -8,12 +8,12 @@ class RecentActivityItem extends StatelessWidget {
   final String date;
 
   const RecentActivityItem({
-    Key? key,
+    super.key,
     required this.title,
     required this.amount,
     required this.cardInfo,
     required this.date,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +27,13 @@ class RecentActivityItem extends StatelessWidget {
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.bolt,
             color: Colors.yellow,
             size: 30,
@@ -45,15 +45,15 @@ class RecentActivityItem extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 95, 93, 93),
+                    color: Color.fromARGB(255, 95, 93, 93),
                   ),
                 ),
                 Text(
                   cardInfo,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15,
                     color: Colors.grey,
                   ),
@@ -66,7 +66,7 @@ class RecentActivityItem extends StatelessWidget {
             children: [
               Text(
                 amount,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Color.fromARGB(255, 96, 95, 95),
@@ -74,7 +74,7 @@ class RecentActivityItem extends StatelessWidget {
               ),
               Text(
                 date,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
                 ),

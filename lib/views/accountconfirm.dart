@@ -3,11 +3,11 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:velopay/views/applicationpassword.dart'; // Make sure to add this package to your pubspec.yaml
 
 void main() {
-  runApp(AccountConfirm());
+  runApp(const AccountConfirm());
 }
 
 class AccountConfirm extends StatelessWidget {
-  AccountConfirm({Key? key}) : super(key: key);
+  const AccountConfirm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,23 +16,23 @@ class AccountConfirm extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Color.fromARGB(
                 255, 250, 249, 248), // Change this color to the desired color
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          title: Text(''),
+          title: const Text(''),
         ),
         backgroundColor: Colors.orange, // Adjusted to the orange shade
         body: SafeArea(
           child: Column(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 80, bottom: 40),
                 child: Text(
                   'Create Account',
@@ -49,8 +49,8 @@ class AccountConfirm extends StatelessWidget {
                   constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.75),
                   padding:
-                      EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
-                  decoration: BoxDecoration(
+                      const EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
@@ -60,7 +60,7 @@ class AccountConfirm extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'Please, enter the OTP code sent to +234 80*** ** 00:',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -68,7 +68,7 @@ class AccountConfirm extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         PinCodeTextField(
                           appContext: context,
                           length: 4, // Number of characters in the PIN
@@ -96,7 +96,7 @@ class AccountConfirm extends StatelessWidget {
                             inactiveColor: Colors
                                 .black, // Border color when field is inactive
                           ),
-                          animationDuration: Duration(
+                          animationDuration: const Duration(
                               milliseconds: 300), // Duration of the animation
                           enableActiveFill:
                               true, // Enable fill color when active
@@ -111,7 +111,7 @@ class AccountConfirm extends StatelessWidget {
                                 value); // Callback for every change in the field
                           },
                         ),
-                        SizedBox(height: 185),
+                        const SizedBox(height: 185),
                         TextButton(
                           onPressed: () {
                             // Pop the current page off the navigation stack
@@ -120,9 +120,9 @@ class AccountConfirm extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AccountConfirm()));
+                                    builder: (context) => const AccountConfirm()));
                           },
-                          child: Text(
+                          child: const Text(
                             'Resend code',
                             style: TextStyle(
                                 color: Colors.black,
@@ -131,26 +131,26 @@ class AccountConfirm extends StatelessWidget {
                                 fontSize: 18),
                           ),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         ElevatedButton(
                           onPressed: () {
                             // Corrected: Navigation happens here in the onPressed
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ApplicationPassword()),
+                                  builder: (context) => const ApplicationPassword()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
-                            padding: EdgeInsets.symmetric(vertical: 20),
-                            textStyle: TextStyle(fontSize: 23),
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            textStyle: const TextStyle(fontSize: 23),
                             minimumSize:
-                                Size(double.infinity, 60), // Full width
+                                const Size(double.infinity, 60), // Full width
                           ),
-                          child: Text(
+                          child: const Text(
                             'Sign Up',
                             style: TextStyle(
                                 color: Colors.white,

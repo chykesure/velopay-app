@@ -13,7 +13,7 @@ class Splashscreen extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
       ),
-      home: Scaffold(
+      home: const Scaffold(
         body: Splash2(),
       ),
     );
@@ -21,6 +21,8 @@ class Splashscreen extends StatelessWidget {
 }
 
 class Splash2 extends StatefulWidget {
+  const Splash2({super.key});
+
   @override
   _Splash2State createState() => _Splash2State();
 }
@@ -36,22 +38,22 @@ class _Splash2State extends State<Splash2> {
         return Container(
           width: double.infinity,
           height: screenHeight,
-          decoration: BoxDecoration(color: Colors.white),
+          decoration: const BoxDecoration(color: Colors.white),
           child: PageView(
             controller: _pageController,
             children: [
               _buildPage(
-                image: AssetImage("images/sp1.jpg"),
+                image: const AssetImage("images/sp1.jpg"),
                 title: "Never miss a payment again",
                 subtitle: "Pay your electricity, internet, and other utility bills quickly and easily from the palm of your hand",
               ),
               _buildPage(
-                image: AssetImage("images/sp2.jpg"),
+                image: const AssetImage("images/sp2.jpg"),
                 title: "Easy and Secure Payments",
                 subtitle: "Experience seamless and secure transactions with VeloPay",
               ),
               _buildPage(
-                image: AssetImage("images/sp2.jpg"),
+                image: const AssetImage("images/sp2.jpg"),
                 title: "Manage Your Bills Efficiently",
                 subtitle: "Keep track of all your bills in one place with VeloPay",
               ),
@@ -67,7 +69,7 @@ class _Splash2State extends State<Splash2> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 100),
+          margin: const EdgeInsets.only(top: 100),
           width: 340,
           height: 500,
           decoration: BoxDecoration(
@@ -78,11 +80,11 @@ class _Splash2State extends State<Splash2> {
             borderRadius: BorderRadius.circular(24),
           ),
         ),
-        SizedBox(height: 20), // Add some spacing between the image and the text
+        const SizedBox(height: 20), // Add some spacing between the image and the text
         Text(
           title,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 20, // Increased font size
             fontFamily: 'Manrope',
@@ -90,11 +92,11 @@ class _Splash2State extends State<Splash2> {
             height: 1.5,
           ),
         ),
-        SizedBox(height: 20), // Add some spacing between the title and the subtitle
+        const SizedBox(height: 20), // Add some spacing between the title and the subtitle
         Text(
           subtitle,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 16, // Increased font size
             fontFamily: 'Manrope',
@@ -102,22 +104,22 @@ class _Splash2State extends State<Splash2> {
             height: 1.5,
           ),
         ),
-        SizedBox(height: 40), // Add some spacing between the subtitle and the button
+        const SizedBox(height: 40), // Add some spacing between the subtitle and the button
         ElevatedButton(
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => WelcomePage()), // Navigate to WelcomePage
+              MaterialPageRoute(builder: (context) => const WelcomePage()), // Navigate to WelcomePage
             );
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFFF8E00), // Background color
+            backgroundColor: const Color(0xFFFF8E00), // Background color
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
           ),
-          child: Text(
+          child: const Text(
             'Continue',
             style: TextStyle(
               color: Colors.white, // Text color
@@ -132,5 +134,5 @@ class _Splash2State extends State<Splash2> {
 }
 
 void main() {
-  runApp(Splashscreen());
+  runApp(const Splashscreen());
 }

@@ -7,7 +7,7 @@ void main() {
 }
 
 class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +19,16 @@ class WelcomePage extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Color(0xFFFF8E00), // Change this color to the desired color
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          title: Text(''),
+          title: const Text(''),
         ),
         body: ListView(
           children: const [
@@ -41,7 +41,7 @@ class WelcomePage extends StatelessWidget {
 }
 
 class Onboarding extends StatelessWidget {
-  const Onboarding({Key? key}) : super(key: key);
+  const Onboarding({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class Onboarding extends StatelessWidget {
           width: double.infinity,
           height: 800,
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: const Color(0xFFD5D7DE)),
+          decoration: const BoxDecoration(color: Color(0xFFD5D7DE)),
           child: Stack(
             children: [
               Positioned(
@@ -68,10 +68,10 @@ class Onboarding extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 185,
                 top: 280,
-                child: Container(
+                child: SizedBox(
                   width: 56,
                   height: 78,
                   child: Stack(
@@ -82,7 +82,7 @@ class Onboarding extends StatelessWidget {
                         child: Text(
                           'V',
                           style: TextStyle(
-                            color: const Color(0xFFFF8E00),
+                            color: Color(0xFFFF8E00),
                             fontSize: 64,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -96,7 +96,7 @@ class Onboarding extends StatelessWidget {
                         child: Text(
                           'P',
                           style: TextStyle(
-                            color: const Color(0xFFFF8E00),
+                            color: Color(0xFFFF8E00),
                             fontSize: 64,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -111,7 +111,7 @@ class Onboarding extends StatelessWidget {
               Positioned(
                 left: 178,
                 top: 365,
-                child: Container(
+                child: SizedBox(
                   width: 50,
                   height: 5,
                   child: Row(
@@ -168,7 +168,7 @@ class Onboarding extends StatelessWidget {
                       height: 5,
                       margin: const EdgeInsets.only(left: 4.0),
                       decoration: ShapeDecoration(
-                        color: Color.fromARGB(255, 16, 16, 16),
+                        color: const Color.fromARGB(255, 16, 16, 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),
                         ),
@@ -177,7 +177,7 @@ class Onboarding extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 120,
                 top: 250,
                 child: Text(
@@ -200,7 +200,7 @@ class Onboarding extends StatelessWidget {
                     // Navigate to sign up screen
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateAccount()),
+                      MaterialPageRoute(builder: (context) => const CreateAccount()),
                     );
                   },
                   child: Container(
@@ -214,7 +214,7 @@ class Onboarding extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -242,7 +242,7 @@ class Onboarding extends StatelessWidget {
                     // Navigate to log in screen
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginAccount()),
+                      MaterialPageRoute(builder: (context) => const LoginAccount()),
                     );
                   },
                   child: Container(
@@ -255,7 +255,7 @@ class Onboarding extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -263,7 +263,7 @@ class Onboarding extends StatelessWidget {
                         Text(
                           'Log in',
                           style: TextStyle(
-                            color: const Color(0xFFFF8E00),
+                            color: Color(0xFFFF8E00),
                             fontSize: 16,
                             fontFamily: 'Abel',
                             fontWeight: FontWeight.w400,
@@ -275,7 +275,7 @@ class Onboarding extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 40,
                 top: 500,
                 width: 336,
@@ -291,7 +291,7 @@ class Onboarding extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 40,
                 top: 407,
                 width: 336,

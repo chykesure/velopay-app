@@ -6,7 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +16,24 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
       ),
       home: Scaffold(
-        body: ListView(children: [
-          Splash(),
-        ]),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFFF8E00),
+          elevation: 0,
+          automaticallyImplyLeading: false,
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            child: const Splash(),
+          ),
+        ),
       ),
     );
   }
 }
 
 class Splash extends StatefulWidget {
+  const Splash({super.key});
+
   @override
   _SplashState createState() => _SplashState();
 }
@@ -50,51 +59,51 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     _opacityAnimationV = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(0, 0.5, curve: Curves.easeIn),
+        curve: const Interval(0, 0.5, curve: Curves.easeIn),
       ),
     );
 
     _opacityAnimationP = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(0.3, 0.8, curve: Curves.easeIn),
+        curve: const Interval(0.3, 0.8, curve: Curves.easeIn),
       ),
     );
 
     _opacityAnimationVeloPay = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(0.6, 1, curve: Curves.easeIn),
+        curve: const Interval(0.6, 1, curve: Curves.easeIn),
       ),
     );
 
     _positionAnimationV = Tween<double>(begin: 50, end: 169).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(0, 0.5, curve: Curves.easeOut),
+        curve: const Interval(0, 0.5, curve: Curves.easeOut),
       ),
     );
 
     _positionAnimationP = Tween<double>(begin: 50, end: 184).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(0.3, 0.8, curve: Curves.easeOut),
+        curve: const Interval(0.3, 0.8, curve: Curves.easeOut),
       ),
     );
 
     _positionAnimationVeloPay = Tween<double>(begin: 50, end: 123).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(0.6, 1, curve: Curves.easeOut),
+        curve: const Interval(0.6, 1, curve: Curves.easeOut),
       ),
     );
 
     _controller.forward();
 
     // Navigate to Splashscreen.dart after 5 seconds
-    Future.delayed(Duration(seconds: 8), () {
+    Future.delayed(const Duration(seconds: 8), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Splashscreen()),
+        MaterialPageRoute(builder: (context) => const Splashscreen()),
       );
     });
   }
@@ -108,12 +117,13 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center, // Center the content vertically
       children: [
         Container(
           width: double.infinity,
           height: 812,
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Color(0xFFFF8E00)),
+          decoration: const BoxDecoration(color: Color(0xFFFF8E00)),
           child: Stack(
             children: [
               AnimatedBuilder(
@@ -121,10 +131,10 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
                 builder: (context, child) {
                   return Positioned(
                     left: _positionAnimationV.value,
-                    top: MediaQuery.of(context).size.height / 2 - 32,
+                    top: MediaQuery.of(context).size.height / 2 - 140,
                     child: Opacity(
                       opacity: _opacityAnimationV.value,
-                      child: Text(
+                      child: const Text(
                         'V',
                         style: TextStyle(
                           color: Colors.white,
@@ -143,10 +153,10 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
                 builder: (context, child) {
                   return Positioned(
                     left: _positionAnimationP.value,
-                    top: MediaQuery.of(context).size.height / 2 - 32,
+                    top: MediaQuery.of(context).size.height / 2 - 140,
                     child: Opacity(
                       opacity: _opacityAnimationP.value,
-                      child: Text(
+                      child: const Text(
                         'P',
                         style: TextStyle(
                           color: Colors.white,
@@ -165,10 +175,10 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
                 builder: (context, child) {
                   return Positioned(
                     left: _positionAnimationVeloPay.value,
-                    top: MediaQuery.of(context).size.height / 2 + 16,
+                    top: MediaQuery.of(context).size.height / 2 - 86,
                     child: Opacity(
                       opacity: _opacityAnimationVeloPay.value,
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 149,
                         height: 39,
                         child: Text(

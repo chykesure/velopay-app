@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:velopay/views/Homes/fundwallet.dart';
+import 'package:velopay/views/services/accountpage.dart';
+import 'package:velopay/views/services/cardpage.dart';
+import 'package:velopay/views/services/myplan.dart';
 import 'homepage.dart'; // Import the homepage.dart file
 
 void main() {
@@ -7,7 +10,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyWallet extends StatefulWidget {
-  const MyWallet({Key? key}) : super(key: key);
+  const MyWallet({super.key});
 
   @override
   _MyWalletState createState() => _MyWalletState();
@@ -27,7 +30,6 @@ class MyWallet extends StatefulWidget {
 class _MyWalletState extends State<MyWallet> {
   bool _isBalanceVisible = true;
   int _selectedIndex = 0;
-  bool _isQrSelected = false;
 
   void _toggleVisibility() {
     setState(() {
@@ -38,21 +40,40 @@ class _MyWalletState extends State<MyWallet> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      _isQrSelected = false;
     });
-    if (index == 0) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+    switch (index) {
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MyPlan()),
+        );
+        break;
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CardPage()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const AccountPage()),
+        );
+        break;
     }
   }
 
   void _onQrTapped() {
-    setState(() {
-      _isQrSelected = true;
-      _selectedIndex = -1;
-    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MyWallet()),
+    );
   }
 
   @override
@@ -164,10 +185,10 @@ class _MyWalletState extends State<MyWallet> {
                     const SizedBox(height: 20),
                     InkWell(
                       onTap: () {
-                        // Corrected: Navigation happens here in the onPressed
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FundWallet()),
+                          MaterialPageRoute(
+                              builder: (context) => const FundWallet()),
                         );
                       },
                       child: Container(
@@ -179,15 +200,15 @@ class _MyWalletState extends State<MyWallet> {
                           color: Colors.orange,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Column(
+                        child: const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
+                            Text(
                               'Fund Wallet',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10),
                           ],
                         ),
                       ),
@@ -215,16 +236,17 @@ class _MyWalletState extends State<MyWallet> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            _buildNavItem(Icons.home, 0),
-            _buildNavItem(Icons.miscellaneous_services, 1),
-            const SizedBox(width: 48.0),
-            _buildNavItem(Icons.payment, 2),
-            _buildNavItem(Icons.person, 3),
+            _buildNavItem(Icons.home, 3),
+            _buildNavItem(Icons.miscellaneous_services, 2),
+            const SizedBox(width: 48.0), // Space for FloatingActionButton
+            _buildNavItem(Icons.payment, 0),
+            _buildNavItem(Icons.person, 1),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        heroTag: 'uniqueTag', // Added unique hero tag
         backgroundColor: Colors.orange,
         onPressed: _onQrTapped,
         shape: RoundedRectangleBorder(
@@ -239,11 +261,14 @@ class _MyWalletState extends State<MyWallet> {
     return IconButton(
       icon: Icon(
         icon,
-        color: _selectedIndex == index && !_isQrSelected
-            ? Colors.orange
-            : Colors.black,
+        color: _selectedIndex == index ? const Color.fromARGB(255, 7, 7, 7) : Colors.black,
       ),
-      onPressed: () => _onItemTapped(index),
+      onPressed: () {
+        setState(() {
+          _selectedIndex = index;
+        });
+        _onItemTapped(index);
+      },
     );
   }
 }

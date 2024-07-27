@@ -1,14 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Make sure this is included
 import 'package:velopay/views/Homes/homepage.dart';
-import 'package:velopay/views/createaccount.dart'; // Make sure the path to your CreateAccount page is correct
+// Make sure the path to your CreateAccount page is correct
 
 void main() {
-  runApp(FundWallet());
+  runApp(const FundWallet());
 }
 
-class FundWallet extends StatelessWidget {
-  FundWallet({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: FundWallet(),
+    );
+  }
+}
+
+class FundWallet extends StatefulWidget {
+  const FundWallet({super.key});
+
+  @override
+  _FundWalletState createState() => _FundWalletState();
+}
+
+class _FundWalletState extends State<FundWallet> {
+  bool _isBalanceVisible = true;
+  int _selectedIndex = 0;
+  bool _isQrSelected = false;
+  final List<Widget> _pages = [HomePage()];
+
+  void _toggleVisibility() {
+    setState(() {
+      _isBalanceVisible = !_isBalanceVisible;
+    });
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      _isQrSelected = false;
+    });
+    if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    }
+    // Add more navigation cases if needed
+  }
+
+
+  void _onQrTapped() {
+    setState(() {
+      _isQrSelected = true;
+      _selectedIndex = -1;
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +67,13 @@ class FundWallet extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Fund Wallet'), // Changed from 'Text:' to 'title:'
+          title: const Text('Fund Wallet'), // Changed from 'Text:' to 'title:'
           backgroundColor: Colors.grey.withOpacity(0.7),
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Color.fromARGB(255, 249, 247, 246),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
@@ -31,19 +82,19 @@ class FundWallet extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 50, bottom: 50),
+                padding: const EdgeInsets.only(top: 50, bottom: 50),
                 child: Container(
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                       horizontal: 20), // Set margin for left and right
                   child: DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Choose or Add new',
                       labelStyle: TextStyle(fontWeight: FontWeight.bold),
                       hintText: 'Fund Wallet ',
                       border: OutlineInputBorder(),
                       enabled: false, // Disable the input field
                     ),
-                    items: [
+                    items: const [
                       DropdownMenuItem(
                         value: 'Option 1',
                         child: Text('Option 1'),
@@ -62,19 +113,19 @@ class FundWallet extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 2, bottom: 60),
+                padding: const EdgeInsets.only(top: 2, bottom: 60),
                 child: Container(
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                       horizontal: 20), // Set margin for left and right
                   child: DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Choose smart card',
                       labelStyle: TextStyle(fontWeight: FontWeight.bold),
                       hintText: 'Card ',
                       border: OutlineInputBorder(),
                       enabled: false, // Disable the input field
                     ),
-                    items: [
+                    items: const [
                       DropdownMenuItem(
                         value: 'Option 1',
                         child: Text('Option 1'),
@@ -95,8 +146,8 @@ class FundWallet extends StatelessWidget {
               Expanded(
                 child: Container(
                   padding:
-                      EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
-                  decoration: BoxDecoration(
+                      const EdgeInsets.only(top: 10, bottom: 10, left: 15, right: 15),
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
@@ -111,10 +162,10 @@ class FundWallet extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.arrow_back),
+                              icon: const Icon(Icons.arrow_back),
                               onPressed: () => Navigator.of(context).pop(),
                             ),
-                            Text(
+                            const Text(
                               'Add new Payment method',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -122,14 +173,14 @@ class FundWallet extends StatelessWidget {
                               ),
                             ),
                             IconButton(
-                              icon: Icon(Icons.close),
+                              icon: const Icon(Icons.close),
                               onPressed: () => Navigator.of(context).pop(),
                             ),
                           ],
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: '16 digits number',
                             labelStyle: TextStyle(fontWeight: FontWeight.bold),
                             hintText: '1342 7654 9007 3331',
@@ -147,12 +198,12 @@ class FundWallet extends StatelessWidget {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           children: [
                             Expanded(
                               child: TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   labelText: 'Expiration date',
                                   labelStyle:
                                       TextStyle(fontWeight: FontWeight.bold),
@@ -161,10 +212,10 @@ class FundWallet extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: TextFormField(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   labelText: 'CVV',
                                   labelStyle:
                                       TextStyle(fontWeight: FontWeight.bold),
@@ -187,7 +238,7 @@ class FundWallet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           children: [
                             Checkbox(
@@ -196,7 +247,7 @@ class FundWallet extends StatelessWidget {
                                 // Handle checkbox state change
                               },
                             ),
-                            Expanded(
+                            const Expanded(
                               child: Text(
                                 'Save this payment method',
                                 style: TextStyle(
@@ -208,14 +259,14 @@ class FundWallet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 120),
+                        const SizedBox(height: 120),
                         ElevatedButton(
                           onPressed: () {
                             // Corrected: Navigation happens here in the onPressed
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomePage()),
+                                  builder: (context) => const HomePage()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -223,12 +274,12 @@ class FundWallet extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            padding: EdgeInsets.symmetric(vertical: 20),
-                            textStyle: TextStyle(fontSize: 23),
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            textStyle: const TextStyle(fontSize: 23),
                             minimumSize:
-                                Size(double.infinity, 60), // Full width
+                                const Size(double.infinity, 60), // Full width
                           ),
-                          child: Text(
+                          child: const Text(
                             'Add',
                             style: TextStyle(
                               color: Colors.white,

@@ -4,11 +4,11 @@ import 'package:velopay/views/loginaccount.dart';
 
 
 void main() {
-  runApp(ApplicationPassword());
+  runApp(const ApplicationPassword());
 }
 
 class ApplicationPassword extends StatelessWidget {
-  ApplicationPassword({Key? key}) : super(key: key);
+  const ApplicationPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +17,18 @@ class ApplicationPassword extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,
-          iconTheme: IconThemeData(color: Color.fromARGB(255, 250, 249, 248)),
+          iconTheme: const IconThemeData(color: Color.fromARGB(255, 250, 249, 248)),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(''),
+          title: const Text(''),
         ),
         backgroundColor: Colors.orange,
         body: SafeArea(
           child: Column(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 80, bottom: 40),
                 child: Text(
                   'Application Password',
@@ -42,8 +42,8 @@ class ApplicationPassword extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
                   ),
@@ -51,12 +51,12 @@ class ApplicationPassword extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'Please, set password for the application for security purposes:',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 18, color: Colors.black),
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         PinCodeTextField(
                           appContext: context,
                           length: 4,
@@ -77,8 +77,8 @@ class ApplicationPassword extends StatelessWidget {
                             selectedColor: Colors.orange,
                           ),
                           cursorColor: Colors.black,
-                          animationDuration: Duration(milliseconds: 300),
-                          textStyle: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+                          animationDuration: const Duration(milliseconds: 300),
+                          textStyle: const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
                           backgroundColor: Colors.transparent,
                           enableActiveFill: true,
                           autoFocus: true,
@@ -86,17 +86,17 @@ class ApplicationPassword extends StatelessWidget {
                             // Navigate to LoginAccount page once the pin is complete
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => LoginAccount()),
+                              MaterialPageRoute(builder: (context) => const LoginAccount()),
                             );
                           },
                           onChanged: (value) {
                             print(value);
                           },
                         ),
-                        SizedBox(height: 290),
+                        const SizedBox(height: 290),
                         TextButton(
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             'Continue without password',
                             style: TextStyle(color: Colors.black, decoration: TextDecoration.underline, fontWeight: FontWeight.bold, fontSize: 18),
                           ),

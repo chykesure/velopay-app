@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:velopay/views/Homes/RecentActivityItem.dart';
 import 'package:intl/intl.dart';
 import 'package:velopay/views/Homes/mywallet.dart';
+import 'package:velopay/views/services/accountpage.dart';
+import 'package:velopay/views/services/cardpage.dart';
+import 'package:velopay/views/services/myplan.dart';
+
+
 
 void main() {
   runApp(const MyApp());
@@ -67,6 +72,32 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = index;
     });
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MyPlan()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CardPage()),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const AccountPage()),
+        );
+        break;
+    }
   }
 
   List<Map<String, String>> _sortedActivities() {
@@ -110,18 +141,15 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: RichText(
                             text: const TextSpan(
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(fontSize: 16, color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: 'Welcome Chyke ',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 18),
+                                      fontWeight: FontWeight.w900, fontSize: 18),
                                 ),
                                 TextSpan(
-                                  text:
-                                      '👋\n\nWhat bill would you like to pay?',
+                                  text: '👋\n\nWhat bill would you like to pay?',
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -257,9 +285,10 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: IconButton(
-                icon: const Icon(Icons.notifications_none,
-                    color: Colors.black, size: 34),
-                onPressed: () {},
+                icon: const Icon(Icons.notification_add, color: Color.fromARGB(255, 7, 7, 7), size: 34),
+                onPressed: () {
+                  
+                },
               ),
             ),
           ),
@@ -284,7 +313,6 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
         onPressed: () {
-          // Corrected: Navigation happens here in the onPressed
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const MyWallet()),
