@@ -14,9 +14,7 @@ class MyPlan extends StatefulWidget {
 class _MyPlanState extends State<MyPlan> {
   int _selectedIndex = 0;
 
-  
-  @override
-void _onItemTapped(int index) {
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -48,6 +46,39 @@ void _onItemTapped(int index) {
     }
   }
 
+  Widget _buildServiceCard(String title, IconData icon) {
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6.0,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 40, color: Colors.black),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -58,19 +89,6 @@ void _onItemTapped(int index) {
       ),
       body: Stack(
         children: [
-          Positioned.fill(
-            top: 0,
-            bottom: kBottomNavigationBarHeight + 150,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.7),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(50.0),
-                  bottomRight: Radius.circular(50.0),
-                ),
-              ),
-            ),
-          ),
           SingleChildScrollView(
             child: Center(
               child: Container(
@@ -105,6 +123,19 @@ void _onItemTapped(int index) {
                       ],
                     ),
                     const SizedBox(height: 20),
+                    GridView.count(
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        _buildServiceCard("Airtime", Icons.phone),
+                        _buildServiceCard("Data", Icons.wifi),
+                        _buildServiceCard("CableTv", Icons.tv),
+                        _buildServiceCard("Electricity", Icons.power),
+                        _buildServiceCard("Internet", Icons.public),
+                        _buildServiceCard("More", Icons.more_horiz),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -112,7 +143,6 @@ void _onItemTapped(int index) {
           ),
         ],
       ),
-
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 10.0,
@@ -145,7 +175,7 @@ void _onItemTapped(int index) {
     );
   }
 
-   Widget _buildNavItem(IconData icon, int index) {
+  Widget _buildNavItem(IconData icon, int index) {
     return IconButton(
       icon: Icon(
         icon,

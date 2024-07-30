@@ -45,21 +45,23 @@ class Onboarding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
         Container(
           width: double.infinity,
-          height: 800,
+          height: screenHeight,
           clipBehavior: Clip.antiAlias,
           decoration: const BoxDecoration(color: Color(0xFFD5D7DE)),
           child: Stack(
             children: [
               Positioned(
-                left: 3,
                 top: 120,
+                left: 13,
+                right: 13, // Added right margin
                 child: Container(
-                  width: 408,
-                  height: 685,
+                  height: screenHeight,
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -119,61 +121,42 @@ class Onboarding extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 10,
-                        height: 5,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFC8D1E1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      Expanded(
+                        child: Container(
+                          height: 5,
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFC8D1E1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                       ),
                       const SizedBox(width: 5),
-                      Container(
-                        width: 10,
-                        height: 5,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFC8D1E1),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      Expanded(
+                        child: Container(
+                          height: 5,
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFC8D1E1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                       ),
                       const SizedBox(width: 5),
-                      Container(
-                        width: 20,
-                        height: 5,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFFF8E00),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      Expanded(
+                        child: Container(
+                          height: 5,
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFFF8E00),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 788,
-                left: 0,
-                right: 0,
-                child: Container(
-                  height: 34,
-                  padding: const EdgeInsets.symmetric(horizontal: 70),
-                  child: Center(
-                    child: Container(
-                      width: 126,
-                      height: 5,
-                      margin: const EdgeInsets.only(left: 4.0),
-                      decoration: ShapeDecoration(
-                        color: const Color.fromARGB(255, 16, 16, 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
               ),
@@ -194,13 +177,14 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 40,
-                top: 620,
+                top: 720,
                 child: GestureDetector(
                   onTap: () {
                     // Navigate to sign up screen
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const CreateAccount()),
+                      MaterialPageRoute(
+                          builder: (context) => const CreateAccount()),
                     );
                   },
                   child: Container(
@@ -236,13 +220,14 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 40,
-                top: 670,
+                top: 770,
                 child: GestureDetector(
                   onTap: () {
                     // Navigate to log in screen
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const LoginAccount()),
+                      MaterialPageRoute(
+                          builder: (context) => const LoginAccount()),
                     );
                   },
                   child: Container(

@@ -116,12 +116,15 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center, // Center the content vertically
       children: [
         Container(
           width: double.infinity,
-          height: 812,
+          height: screenHeight,
           clipBehavior: Clip.antiAlias,
           decoration: const BoxDecoration(color: Color(0xFFFF8E00)),
           child: Stack(
@@ -130,8 +133,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
                 animation: _controller,
                 builder: (context, child) {
                   return Positioned(
-                    left: _positionAnimationV.value,
-                    top: MediaQuery.of(context).size.height / 2 - 140,
+                    left: screenWidth * (_positionAnimationV.value / 375), // Adjust for screen width
+                    top: screenHeight / 2 - 140,
                     child: Opacity(
                       opacity: _opacityAnimationV.value,
                       child: const Text(
@@ -152,8 +155,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
                 animation: _controller,
                 builder: (context, child) {
                   return Positioned(
-                    left: _positionAnimationP.value,
-                    top: MediaQuery.of(context).size.height / 2 - 140,
+                    left: screenWidth * (_positionAnimationP.value / 375), // Adjust for screen width
+                    top: screenHeight / 2 - 140,
                     child: Opacity(
                       opacity: _opacityAnimationP.value,
                       child: const Text(
@@ -174,8 +177,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
                 animation: _controller,
                 builder: (context, child) {
                   return Positioned(
-                    left: _positionAnimationVeloPay.value,
-                    top: MediaQuery.of(context).size.height / 2 - 86,
+                    left: screenWidth * (_positionAnimationVeloPay.value / 375), // Adjust for screen width
+                    top: screenHeight / 2 - 86,
                     child: Opacity(
                       opacity: _opacityAnimationVeloPay.value,
                       child: const SizedBox(
