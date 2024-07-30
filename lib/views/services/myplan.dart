@@ -3,6 +3,7 @@ import 'package:velopay/views/Homes/homepage.dart';
 import 'package:velopay/views/Homes/mywallet.dart';
 import 'package:velopay/views/services/accountpage.dart';
 import 'package:velopay/views/services/cardpage.dart';
+import 'package:velopay/views/services/airtime.dart'; // Import AirtimePage
 
 class MyPlan extends StatefulWidget {
   const MyPlan({super.key});
@@ -47,33 +48,43 @@ class _MyPlanState extends State<MyPlan> {
   }
 
   Widget _buildServiceCard(String title, IconData icon) {
-    return Container(
-      margin: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6.0,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 40, color: Colors.black),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
+    return GestureDetector(
+      onTap: () {
+        if (title == "Airtime") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AirtimePage()),
+          );
+        }
+      },
+      child: Container(
+        margin: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6.0,
+              offset: Offset(0, 2),
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: Colors.black),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

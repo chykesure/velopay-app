@@ -13,7 +13,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 10),
                             ),
-                            child: Row(
+                            child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text('Fund Wallet'),
@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                           onPressed: _toggleActivityView,
                           child: Text(
                             _showAllActivities ? 'Hide all' : 'See all',
-                            style: TextStyle(color: Colors.orange),
+                            style: const TextStyle(color: Colors.orange),
                           ),
                         ),
                       ],

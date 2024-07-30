@@ -29,7 +29,7 @@ class _FundWalletState extends State<FundWallet> {
   bool _isBalanceVisible = true;
   int _selectedIndex = 0;
   bool _isQrSelected = false;
-  final List<Widget> _pages = [HomePage()];
+  final List<Widget> _pages = [const HomePage()];
 
   void _toggleVisibility() {
     setState(() {

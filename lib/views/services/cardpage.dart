@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:velopay/views/Homes/homepage.dart';
 import 'package:velopay/views/Homes/mywallet.dart';
 import 'package:velopay/views/services/accountpage.dart';
-import 'package:velopay/views/services/cardpage.dart';
 import 'package:velopay/views/services/myplan.dart';
 
 class CardPage extends StatefulWidget {
@@ -49,6 +48,7 @@ void _onItemTapped(int index) {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

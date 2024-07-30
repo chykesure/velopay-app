@@ -48,6 +48,7 @@ void _onItemTapped(int index) {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

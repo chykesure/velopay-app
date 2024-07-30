@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
           elevation: 0,
           automaticallyImplyLeading: false,
         ),
-        body: Center(
+        body: const Center(
           child: SingleChildScrollView(
-            child: const Splash(),
+            child: Splash(),
           ),
         ),
       ),
