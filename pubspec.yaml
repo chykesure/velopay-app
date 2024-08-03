@@ -59,6 +59,10 @@ flutter:
     - images/sp1.jpg
     - images/sp2.jpg
     - images/pas.jpg
+    - images/mtn.png
+    - images/glo.png
+    - images/9mobile.jpg
+    - images/airtel.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

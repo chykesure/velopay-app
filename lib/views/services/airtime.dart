@@ -122,12 +122,12 @@ class _AirtimePageState extends State<AirtimePage> {
                                 builder: (context) => const SelectOperator()),
                           );
                         },
-                        child: Row(
+                        child: const Row(
                           children: [
                             Icon(Icons.phone_android,
                                 color: Colors.orange, size: 40),
-                            const SizedBox(width: 15),
-                            const Text(
+                            SizedBox(width: 15),
+                            Text(
                               'Airtime Recharge',
                               style: TextStyle(
                                 fontSize: 18,
@@ -243,7 +243,7 @@ class _AirtimePageState extends State<AirtimePage> {
       ),
       child: Row(
         children: [
-          Icon(Icons.receipt_long, color: Colors.orange, size: 40),
+          const Icon(Icons.receipt_long, color: Colors.orange, size: 40),
           const SizedBox(width: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

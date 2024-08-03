@@ -14,7 +14,7 @@ class SelectOperator extends StatefulWidget {
 
 class _SelectOperatorState extends State<SelectOperator> {
   int _selectedIndex = 0;
-  String? _selectedNetwork;
+  String? _selectedNetwork = 'MTN';
   final TextEditingController _phoneController = TextEditingController();
   bool _saveTopup = false;
   bool _scheduleTopup = false;
@@ -49,6 +49,52 @@ class _SelectOperatorState extends State<SelectOperator> {
         );
         break;
     }
+  }
+
+  void _showNetworkSelectionModal() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
+          child: Container(
+            color: Colors.orange,
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                _buildNetworkOption('Airtel', 'images/airtel.jpg'),
+                _buildNetworkOption('9Mobile', 'images/9mobile.jpg'),
+                _buildNetworkOption('Glo', 'images/glo.png'),
+                _buildNetworkOption('MTN', 'images/mtn.png'),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildNetworkOption(String network, String assetPath) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: AssetImage(assetPath),
+      ),
+      title: Text(network),
+      trailing: Radio<String>(
+        value: network,
+        groupValue: _selectedNetwork,
+        onChanged: (String? value) {
+          setState(() {
+            _selectedNetwork = value;
+          });
+          Navigator.pop(context);
+        },
+      ),
+    );
   }
 
   @override
@@ -96,89 +142,8 @@ class _SelectOperatorState extends State<SelectOperator> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 60),
-                    DropdownButtonFormField<String>(
-                      value: _selectedNetwork,
-                      items: ['MTN', 'GLO', 'AIRTEL']
-                          .map((network) => DropdownMenuItem(
-                                value: network,
-                                child: Container(
-                                  color: Colors.transparent,
-                                  child: Text(
-                                    network,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                              ))
-                          .toList(),
-                      decoration: const InputDecoration(
-                        labelText: 'Select Mobile Operator',
-                        border: OutlineInputBorder(),
-                        labelStyle: TextStyle(color: Colors.black),
-                      ),
-                      dropdownColor: Colors.transparent, // Make the dropdown background transparent
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedNetwork = value;
-                        });
-                      },
-                    ),
                     const SizedBox(height: 20),
-                    TextFormField(
-                      controller: _phoneController,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter phone number',
-                        border: OutlineInputBorder(),
-                        labelStyle: TextStyle(color: Colors.black),
-                      ),
-                      keyboardType: TextInputType.phone,
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                    const SizedBox(height: 20),
-                    SwitchListTile(
-                      title: const Text(
-                        'Save this topup',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      value: _saveTopup,
-                      onChanged: (value) {
-                        setState(() {
-                          _saveTopup = value;
-                        });
-                      },
-                    ),
-                    SwitchListTile(
-                      title: const Text(
-                        'Schedule this airtime topup',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      value: _scheduleTopup,
-                      onChanged: (value) {
-                        setState(() {
-                          _scheduleTopup = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Implement the functionality for buying airtime here
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          backgroundColor: Colors.orange,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        child: const Text(
-                          'Buy Airtime',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
+                    _buildPhoneNumberInput(),
                   ],
                 ),
               ),
@@ -225,6 +190,55 @@ class _SelectOperatorState extends State<SelectOperator> {
         color: _selectedIndex == index ? Colors.orange : Colors.black,
       ),
       onPressed: () => _onItemTapped(index),
+    );
+  }
+
+  Widget _buildPhoneNumberInput() {
+    return GestureDetector(
+      onTap: _showNetworkSelectionModal,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey.shade300, width: 2.0),
+        ),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage(
+                _selectedNetwork == 'MTN'
+                    ? 'images/mtn.png'
+                    : _selectedNetwork == 'Airtel'
+                        ? 'images/airtel.jpg'
+                        : _selectedNetwork == '9Mobile'
+                            ? 'images/9mobile.jpg'
+                            : _selectedNetwork == 'Glo'
+                                ? 'images/glo.png'
+                                : 'images/default.png',
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: _phoneController,
+                keyboardType: TextInputType.phone,
+                textAlign: TextAlign.center,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: '070 3793 3533',
+                  hintStyle:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+            ),
+            const Icon(Icons.person, color: Colors.green),
+          ],
+        ),
+      ),
     );
   }
 }
