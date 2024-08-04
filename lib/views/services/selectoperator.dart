@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import this for input formatters
 import 'package:velopay/views/Homes/homepage.dart';
 import 'package:velopay/views/Homes/mywallet.dart';
 import 'package:velopay/views/services/accountpage.dart';
@@ -15,6 +16,8 @@ class SelectOperator extends StatefulWidget {
 class _SelectOperatorState extends State<SelectOperator> {
   int _selectedIndex = 0;
   String? _selectedNetwork = 'MTN';
+  String? _selectedPaymentMethod = 'Payment Method 1';
+  String? _selectedSourceAccount = 'Source Account 1';
   final TextEditingController _phoneController = TextEditingController();
   bool _saveTopup = false;
   bool _scheduleTopup = false;
@@ -78,6 +81,58 @@ class _SelectOperatorState extends State<SelectOperator> {
     );
   }
 
+  void _showPaymentMethodSelectionModal() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
+          child: Container(
+            color: Colors.orange,
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                _buildPaymentMethodOption('Payment Method 1'),
+                _buildPaymentMethodOption('Payment Method 2'),
+                _buildPaymentMethodOption('Payment Method 3'),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showSourceAccountSelectionModal() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
+          child: Container(
+            color: Colors.orange,
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                _buildSourceAccountOption('Source Account 1'),
+                _buildSourceAccountOption('Source Account 2'),
+                _buildSourceAccountOption('Source Account 3'),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildNetworkOption(String network, String assetPath) {
     return ListTile(
       leading: CircleAvatar(
@@ -90,6 +145,38 @@ class _SelectOperatorState extends State<SelectOperator> {
         onChanged: (String? value) {
           setState(() {
             _selectedNetwork = value;
+          });
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+
+  Widget _buildPaymentMethodOption(String method) {
+    return ListTile(
+      title: Text(method),
+      trailing: Radio<String>(
+        value: method,
+        groupValue: _selectedPaymentMethod,
+        onChanged: (String? value) {
+          setState(() {
+            _selectedPaymentMethod = value;
+          });
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+
+  Widget _buildSourceAccountOption(String account) {
+    return ListTile(
+      title: Text(account),
+      trailing: Radio<String>(
+        value: account,
+        groupValue: _selectedSourceAccount,
+        onChanged: (String? value) {
+          setState(() {
+            _selectedSourceAccount = value;
           });
           Navigator.pop(context);
         },
@@ -144,6 +231,17 @@ class _SelectOperatorState extends State<SelectOperator> {
                     ),
                     const SizedBox(height: 20),
                     _buildPhoneNumberInput(),
+                    const SizedBox(height: 20),
+                    _buildAmountInput(),
+                    const SizedBox(height: 20),
+                    _buildPaymentMethodInput(),
+                    const SizedBox(height: 20),
+                    _buildSourceAccountInput(),
+                    const SizedBox(height: 20),
+                    _buildSaveTopupSwitch(),
+                    _buildScheduleTopupSwitch(),
+                    const SizedBox(height: 20),
+                    _buildBuyAirtimeButton(),
                   ],
                 ),
               ),
@@ -160,7 +258,7 @@ class _SelectOperatorState extends State<SelectOperator> {
           children: <Widget>[
             _buildNavItem(Icons.home, 2),
             _buildNavItem(Icons.miscellaneous_services, 0),
-            const SizedBox(width: 48.0),
+            const SizedBox(width: 48.0), // Space for the FloatingActionButton
             _buildNavItem(Icons.payment, 1),
             _buildNavItem(Icons.person, 3),
           ],
@@ -223,6 +321,9 @@ class _SelectOperatorState extends State<SelectOperator> {
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 textAlign: TextAlign.center,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(11)
+                ], // Limit to 11 digits
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: '070 3793 3533',
@@ -237,6 +338,152 @@ class _SelectOperatorState extends State<SelectOperator> {
             ),
             const Icon(Icons.person, color: Colors.green),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAmountInput() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade300, width: 2.0),
+      ),
+      child: TextField(
+        decoration: InputDecoration(
+          labelText: 'Enter Amount',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          hintText: 'Enter Amount',
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+        ),
+        keyboardType: TextInputType.number,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.digitsOnly,
+        ],
+        style: const TextStyle(
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentMethodInput() {
+    return GestureDetector(
+      onTap: _showPaymentMethodSelectionModal,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey.shade300, width: 2.0),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                _selectedPaymentMethod!,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const Icon(Icons.arrow_drop_down, color: Colors.black),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSourceAccountInput() {
+    return GestureDetector(
+      onTap: _showSourceAccountSelectionModal,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey.shade300, width: 2.0),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                _selectedSourceAccount!,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const Icon(Icons.arrow_drop_down, color: Colors.black),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSaveTopupSwitch() {
+    return SwitchListTile(
+      title: const Text(
+        'Save this topup',
+        style: TextStyle(color: Colors.black),
+      ),
+      value: _saveTopup,
+      onChanged: (bool value) {
+        setState(() {
+          _saveTopup = value;
+        });
+      },
+      activeColor: Colors.orange,
+    );
+  }
+
+  Widget _buildScheduleTopupSwitch() {
+    return SwitchListTile(
+      title: const Text(
+        'Schedule this airtime topup',
+        style: TextStyle(color: Colors.black),
+      ),
+      value: _scheduleTopup,
+      onChanged: (bool value) {
+        setState(() {
+          _scheduleTopup = value;
+        });
+      },
+      activeColor: Colors.orange,
+    );
+  }
+
+  Widget _buildBuyAirtimeButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.orange,
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        onPressed: () {
+          // Implement buy airtime logic here
+        },
+        child: const Text(
+          'Buy Airtime',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
       ),
     );
