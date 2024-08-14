@@ -5,6 +5,7 @@ import 'package:velopay/views/Homes/mywallet.dart';
 import 'package:velopay/views/services/accountpage.dart';
 import 'package:velopay/views/services/cardpage.dart';
 import 'package:velopay/views/services/myplan.dart';
+import 'package:velopay/views/services/reviewpayment.dart';
 
 class SelectOperator extends StatefulWidget {
   const SelectOperator({super.key});
@@ -187,67 +188,73 @@ class _SelectOperatorState extends State<SelectOperator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:
+          false, // Prevents resizing when the keyboard appears
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.orange,
         elevation: 0,
         automaticallyImplyLeading: false,
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Center(
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Center(
-                              child: RichText(
-                                text: const TextSpan(
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: 'Select Operator ',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 28,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              padding: EdgeInsets.only(
+                  bottom: 80), // Adjust this padding if necessary
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Center(
+                                child: RichText(
+                                  text: const TextSpan(
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: 'Select Operator ',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 28,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    _buildPhoneNumberInput(),
-                    const SizedBox(height: 20),
-                    _buildAmountInput(),
-                    const SizedBox(height: 20),
-                    _buildPaymentMethodInput(),
-                    const SizedBox(height: 20),
-                    _buildSourceAccountInput(),
-                    const SizedBox(height: 20),
-                    _buildSaveTopupSwitch(),
-                    _buildScheduleTopupSwitch(),
-                    const SizedBox(height: 20),
-                    _buildBuyAirtimeButton(),
-                  ],
+                      const SizedBox(height: 20),
+                      _buildPhoneNumberInput(),
+                      const SizedBox(height: 20),
+                      _buildAmountInput(),
+                      const SizedBox(height: 20),
+                      _buildPaymentMethodInput(),
+                      const SizedBox(height: 20),
+                      _buildSourceAccountInput(),
+                      const SizedBox(height: 20),
+                      _buildSaveTopupSwitch(),
+                      _buildScheduleTopupSwitch(),
+                      const SizedBox(height: 20),
+                      _buildBuyAirtimeButton(),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -475,7 +482,10 @@ class _SelectOperatorState extends State<SelectOperator> {
           ),
         ),
         onPressed: () {
-          // Implement buy airtime logic here
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ReviewPayment()),
+          );
         },
         child: const Text(
           'Buy Airtime',
