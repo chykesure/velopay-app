@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velopay/views/services/verification.dart';
 
 class ReviewPayment extends StatefulWidget {
   const ReviewPayment({super.key});
@@ -68,7 +69,8 @@ class _ReviewPaymentState extends State<ReviewPayment> {
                             color: Colors.grey.withOpacity(0.1),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: const Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                       ),
@@ -120,7 +122,11 @@ class _ReviewPaymentState extends State<ReviewPayment> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Handle confirm action here
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Verification()),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.orange,
