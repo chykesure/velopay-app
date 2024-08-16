@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:velopay/views/services/transactioncomplete.dart';
 
 class Verification extends StatefulWidget {
   const Verification({super.key});
@@ -109,7 +110,7 @@ class _VerificationState extends State<Verification> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Verification(),
+                    builder: (context) => const TransactionComplete(),
                   ),
                 );
               },
