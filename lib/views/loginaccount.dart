@@ -6,8 +6,21 @@ void main() {
   runApp(const LoginAccount());
 }
 
-class LoginAccount extends StatelessWidget {
+class LoginAccount extends StatefulWidget {
   const LoginAccount({super.key});
+
+  @override
+  _LoginAccountState createState() => _LoginAccountState();
+}
+
+class _LoginAccountState extends State<LoginAccount> {
+  bool _obscureText = true; // For toggling password visibility
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,28 +62,71 @@ class LoginAccount extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 40),
                         TextFormField(
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             labelText: 'Email',
-                            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                            labelStyle: const TextStyle(fontWeight: FontWeight.bold),
                             hintText: 'Enter your email address',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.email),
-                            suffixIcon: Icon(Icons.help_outline), 
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 2.0,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.orange,
+                                width: 2.0,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 2.0,
+                              ),
+                            ),
+                            prefixIcon: const Icon(Icons.email),
+                            suffixIcon: const Icon(Icons.help_outline),
                           ),
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
-                          decoration: const InputDecoration(
+                          obscureText: _obscureText,
+                          decoration: InputDecoration(
                             labelText: 'Password',
-                            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                            labelStyle: const TextStyle(fontWeight: FontWeight.bold),
                             hintText: 'Set password',
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(Icons.lock),
-                            suffixIcon: Icon(Icons.visibility_off),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 2.0,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.orange,
+                                width: 2.0,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 2.0,
+                              ),
+                            ),
+                            prefixIcon: const Icon(Icons.lock),
+                            suffixIcon: IconButton(
+                              icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+                              onPressed: _togglePasswordVisibility,
+                            ),
                           ),
-                          obscureText: true,
                         ),
                         Align(
                           alignment: Alignment.centerRight,
@@ -109,7 +165,7 @@ class LoginAccount extends StatelessWidget {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
-                            // Corrected: Navigation happens here in the onPressed
+                            // Navigation to HomePage
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => const HomePage()),
