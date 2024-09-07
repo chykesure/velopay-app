@@ -205,7 +205,7 @@ class _CardPageState extends State<CardPage> with SingleTickerProviderStateMixin
       child: ListView(
         padding: EdgeInsets.all(screenWidth * 0.05),
         children: [
-          _buildTransactionItem(Icons.phone, 'Airtime', 'MASTERCARD **** 3241', '\$10.00', screenWidth),
+          _buildTransactionItem(Icons.phone, 'Airtime', 'MASTERCARD **** 3241', '\$50.00', screenWidth),
           _buildTransactionItem(Icons.water_drop, 'Water', 'MASTERCARD **** 3241', '\$10.00', screenWidth),
           _buildTransactionItem(Icons.local_fire_department, 'Gas', 'MASTERCARD **** 3241', '\$25.00', screenWidth),
           _buildTransactionItem(Icons.bolt, 'Light', 'MASTERCARD **** 3241', '\$108.00', screenWidth),
