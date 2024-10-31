@@ -1,27 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:velopay/views/Homes/homepage.dart';
-import 'package:velopay/views/Homes/mywallet.dart';
-import 'package:velopay/views/services/cardpage.dart';
+import 'package:velopay/views/loginaccount.dart';
 import 'package:velopay/views/services/myplan.dart';
+import 'package:velopay/views/services/cardpage.dart';
+import 'package:velopay/views/Homes/mywallet.dart';
+import 'package:velopay/views/services/personaldetails.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: AccountPage(),
+    );
+  }
+}
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
 
   @override
-  State<AccountPage> createState() => _AccountPageState();
+  _AccountPageState createState() => _AccountPageState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _AccountPageState extends State<AccountPage>
+    with SingleTickerProviderStateMixin {
+  bool _isBalanceVisible = true;
   int _selectedIndex = 0;
+  int _tappedIndex = -1; // Track the tapped item index for animation
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation; // For scaling effect
 
-  
   @override
-void _onItemTapped(int index) {
+  void initState() {
+    super.initState();
+    // Initialize the controller here before it's used
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _toggleVisibility() {
+    setState(() {
+      _isBalanceVisible = !_isBalanceVisible;
+    });
+  }
+
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
     switch (index) {
-      case 3:
+      case 1:
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
@@ -33,23 +77,30 @@ void _onItemTapped(int index) {
           MaterialPageRoute(builder: (context) => const MyPlan()),
         );
         break;
-      case 1:
+      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const CardPage()),
         );
         break;
       case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const AccountPage()),
-        );
+        // No action needed for AccountPage as it's the current page
         break;
     }
   }
 
+  void _onMenuItemTapped(int index) {
+    setState(() {
+      _tappedIndex = index; // Update the tapped item
+    });
+    _controller.reset();
+    _controller.forward(); // Start the scaling animation
+  }
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -57,58 +108,152 @@ void _onItemTapped(int index) {
         elevation: 0,
         automaticallyImplyLeading: false,
       ),
-
       body: Stack(
         children: [
           Positioned.fill(
             top: 0,
             bottom: kBottomNavigationBarHeight + 150,
             child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.7),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(50.0),
-                  bottomRight: Radius.circular(50.0),
-                ),
-              ),
+              color: Colors.orange,
             ),
           ),
-          SingleChildScrollView(
-            child: Center(
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: RichText(
-                            text: const TextSpan(
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'Account ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 18),
-                                ),
-                                TextSpan(
-                                  text:
-                                      '\n\nExplore our range of services designed to simplify your life.',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              // Profile Avatar Section
+              const Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.blueAccent,
+                    backgroundImage: AssetImage(
+                        'images/pas.jpg'), // Placeholder for user profile picture
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.blueAccent,
+                        size: 15,
+                      ),
                     ),
-                    const SizedBox(height: 20),
-                  ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              // User Name and Balance
+              const Text(
+                'Pascal Polycarp',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
+              ),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'NGN ',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    _isBalanceVisible ? '7,200,000.00' : '***',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    icon: Icon(
+                      _isBalanceVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.white,
+                    ),
+                    onPressed: _toggleVisibility,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // Menu Buttons Section
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: const BoxDecoration(
+                    color: Colors
+                        .white, // Background color for the overall container
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
+                  child: ListView(
+                    children: [
+                      _buildMenuItem(Icons.person, "Personal details", 0, () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PersonalDetails()),
+                        );
+                      }),
+                      _buildMenuItem(Icons.payment, "Payment methods", 1, () {
+                        // Action for Payment methods
+                        print("Payment methods pressed");
+                        // Navigate to Payment methods screen or perform another action
+                      }),
+                      _buildMenuItem(Icons.history, "Transactions", 2, () {
+                        // Action for Transactions
+                        print("Transactions pressed");
+                        // Navigate to Transactions screen or perform another action
+                      }),
+                      _buildMenuItem(Icons.notifications, "Notifications", 3,
+                          () {
+                        // Action for Notifications
+                        print("Notifications pressed");
+                        // Navigate to Notifications screen or perform another action
+                      }),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // Sign Out Button Section
+          Positioned(
+            left: 16.0,
+            bottom: 40.0,
+            child: GestureDetector(
+              onTap: () {
+                // Handle sign out action
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const LoginAccount()), // Navigate to the login page on sign out
+                );
+              },
+              child: const Row(
+                children: [
+                  Icon(Icons.logout,
+                      color: Colors.orange, size: 35), // Increased size here
+                  SizedBox(width: 8.0),
+                  Text(
+                    'Sign Out',
+                    style: TextStyle(color: Colors.orange, fontSize: 22),
+                  ),
+                ],
               ),
             ),
           ),
@@ -121,10 +266,10 @@ void _onItemTapped(int index) {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            _buildNavItem(Icons.home, 3),
-            _buildNavItem(Icons.miscellaneous_services, 2),
+            _buildNavItem(Icons.home, 2),
+            _buildNavItem(Icons.miscellaneous_services, 1),
             const SizedBox(width: 48.0),
-            _buildNavItem(Icons.payment, 1),
+            _buildNavItem(Icons.payment, 3),
             _buildNavItem(Icons.person, 0),
           ],
         ),
@@ -139,14 +284,65 @@ void _onItemTapped(int index) {
           );
         },
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(screenWidth * 0.075),
         ),
         child: const Icon(Icons.qr_code_scanner),
       ),
     );
   }
 
-   Widget _buildNavItem(IconData icon, int index) {
+  // Menu Item Builder with Scaling and Background Animation
+  Widget _buildMenuItem(
+      IconData icon, String title, int index, Function onTap) {
+    bool isTapped = _tappedIndex == index;
+
+    return GestureDetector(
+      onTap: () {
+        onTap();
+        _onMenuItemTapped(index);
+      },
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: isTapped ? _scaleAnimation.value : 1.0,
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                color: isTapped
+                    ? Colors.orangeAccent.withOpacity(0.8)
+                    : const Color.fromARGB(255, 192, 193, 193),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: isTapped
+                    ? [
+                        BoxShadow(
+                          color: Colors.orange.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        )
+                      ]
+                    : [], // Add shadow on tap
+              ),
+              child: ListTile(
+                leading: Icon(icon, color: Colors.white),
+                title: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  // Navigation Item Builder
+  Widget _buildNavItem(IconData icon, int index) {
     return IconButton(
       icon: Icon(
         icon,

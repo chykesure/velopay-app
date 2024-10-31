@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "479051743374",
+    "project_id": "velopay-cd4fc",
+    "storage_bucket": "velopay-cd4fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479051743374:android:cc4e07faf82357c32c89df",
+        "android_client_info": {
+          "package_name": "com.example.velopay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDws9by0XwjfmD3160azT_lvt5Ew0hXazE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

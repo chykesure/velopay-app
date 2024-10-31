@@ -69,7 +69,7 @@ class _NotificationBarState extends State<NotificationBar> {
         title: const Text("Notifications", style: TextStyle(color: Colors.black)),
         actions: [
           IconButton(
-            icon: Icon(Icons.tune, color: Colors.grey),
+            icon: const Icon(Icons.tune, color: Colors.grey),
             onPressed: () {
               // Add functionality for the settings button if necessary
             },

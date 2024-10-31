@@ -77,13 +77,13 @@ class _ReviewPaymentState extends State<ReviewPayment> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
+                          const Row(
                             children: [
                               Icon(Icons.receipt_long, color: Colors.orange),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 10),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
                                     'BUY-AIRTIME',
                                     style: TextStyle(

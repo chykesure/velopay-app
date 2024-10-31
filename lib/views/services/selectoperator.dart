@@ -200,7 +200,7 @@ class _SelectOperatorState extends State<SelectOperator> {
         child: Stack(
           children: [
             SingleChildScrollView(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                   bottom: 80), // Adjust this padding if necessary
               child: Center(
                 child: Container(
