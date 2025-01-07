@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // To handle JSON
-import 'package:velopay/views/loginaccount.dart'; // Make sure this path is correct
-import 'package:flutter/services.dart'; // <-- Add this to import LengthLimitingTextInputFormatter
+import 'dart:convert';
+import 'package:velopay/views/loginaccount.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,11 +28,12 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-  bool _obscureText = true; // To toggle password visibility
+  bool _obscureText = true;
+  final _usernameController = TextEditingController(); // Username controller
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController(); // Confirm password controller
+  final _confirmPasswordController = TextEditingController();
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -40,53 +41,50 @@ class _CreateAccountState extends State<CreateAccount> {
     });
   }
 
-  // Function to send registration data to the backend API
   Future<void> _registerUser() async {
+    final String username = _usernameController.text.trim();
     final String email = _emailController.text.trim();
     final String phone = _phoneController.text.trim();
     final String password = _passwordController.text.trim();
     final String confirmPassword = _confirmPasswordController.text.trim();
 
-    // Validate form inputs before making API call
-    if (email.isEmpty || phone.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+    if (username.isEmpty ||
+        email.isEmpty ||
+        phone.isEmpty ||
+        password.isEmpty ||
+        confirmPassword.isEmpty) {
       _showSnackbar('All fields are required.');
       return;
     }
 
-    // Check if passwords match
     if (password != confirmPassword) {
       _showSnackbar('Passwords do not match.');
       return;
     }
 
-    // Define the API endpoint
-    const String apiUrl = "http://10.0.2.2/myapi/index.php"; // Replace with your actual API endpoint
+    //const String apiUrl = "http://10.0.2.2/myapi/index.php";
+    const String apiUrl = "https://swiftsendify.com/velopay_api/index.php";
 
     try {
-      // Send the POST request to the backend API
       final response = await http.post(
         Uri.parse(apiUrl),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
+          'username': username,
           'email': email,
           'phone': phone,
           'password': password,
         }),
       );
 
-      // Debugging - Print response status and body
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-
-      // Handle the API response
       if (response.statusCode == 201 || response.statusCode == 200) {
-        // Show success message
-        _showSnackbar('Registration successful.');
-        // Navigate to the login page after a short delay
-        // You can uncomment the line below to navigate to the login page after successful registration
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginAccount()));
+        final responseBody = jsonDecode(response.body);
+        if (responseBody['message'] == 'User registered successfully') {
+          _showSnackbar('Registration successful.');
+        } else {
+          _showSnackbar(responseBody['message'] ?? 'Registration failed.');
+        }
       } else {
-        // If registration fails, show an error message
         final responseBody = jsonDecode(response.body);
         _showSnackbar(responseBody['message'] ?? 'Registration failed.');
       }
@@ -96,34 +94,35 @@ class _CreateAccountState extends State<CreateAccount> {
     }
   }
 
-  // Function to display messages in a Snackbar
   void _showSnackbar(String message) {
     final snackBar = SnackBar(
       content: Text(message),
-      duration: const Duration(seconds: 10), // Duration for Snackbar display
+      duration: const Duration(seconds: 10),
       action: SnackBarAction(
         label: 'OK',
         onPressed: () {
-          // Optionally, you can perform any action when the button is pressed
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const LoginAccount()),
-          );
+          // Only navigate to LoginAccount if the registration is successful
+          if (message == 'Registration successful.') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginAccount()),
+            );
+          }
         },
       ),
     );
 
-    // Use ScaffoldMessenger to show the Snackbar
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false, // Prevents resizing when keyboard appears
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.orange,
-        iconTheme: const IconThemeData(color: Color.fromARGB(255, 249, 247, 246)),
+        iconTheme:
+            const IconThemeData(color: Color.fromARGB(255, 249, 247, 246)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
@@ -147,11 +146,15 @@ class _CreateAccountState extends State<CreateAccount> {
             ),
             Expanded(
               child: Container(
-                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
-                padding: const EdgeInsets.only(top: 50, bottom: 20, left: 20, right: 20),
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.75),
+                padding: const EdgeInsets.only(
+                    top: 50, bottom: 20, left: 20, right: 20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30)),
                 ),
                 child: SingleChildScrollView(
                   child: Column(
@@ -159,11 +162,45 @@ class _CreateAccountState extends State<CreateAccount> {
                     children: [
                       const SizedBox(height: 40),
                       TextFormField(
+                        controller: _usernameController,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          labelStyle: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
+                          hintText: 'Enter your username',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 2.0,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 2.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Colors.orange,
+                              width: 2.0,
+                            ),
+                          ),
+                          prefixIcon: const Icon(Icons.person),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
                         controller: _emailController,
-                        style: const TextStyle(color: Colors.black), // Set text color to pure black
+                        style: const TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           labelText: 'Email',
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          labelStyle: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
                           hintText: 'Enter your email address',
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -175,7 +212,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 36, 35, 35),
+                              color: Colors.grey,
                               width: 2.0,
                             ),
                           ),
@@ -195,12 +232,13 @@ class _CreateAccountState extends State<CreateAccount> {
                         style: const TextStyle(color: Colors.black),
                         keyboardType: TextInputType.number,
                         inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly, // Only allow digits
-                          LengthLimitingTextInputFormatter(11), // Limit phone number length to 11
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(11),
                         ],
                         decoration: InputDecoration(
                           labelText: 'Phone number',
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          labelStyle: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
                           hintText: '+234',
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -233,7 +271,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          labelStyle: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
                           hintText: 'Enter your password',
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -258,7 +297,9 @@ class _CreateAccountState extends State<CreateAccount> {
                           ),
                           prefixIcon: const Icon(Icons.lock),
                           suffixIcon: IconButton(
-                            icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+                            icon: Icon(_obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility),
                             onPressed: _togglePasswordVisibility,
                           ),
                         ),
@@ -270,7 +311,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          labelStyle: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
                           hintText: 'Re-enter your password',
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -295,7 +337,9 @@ class _CreateAccountState extends State<CreateAccount> {
                           ),
                           prefixIcon: const Icon(Icons.lock),
                           suffixIcon: IconButton(
-                            icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+                            icon: Icon(_obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility),
                             onPressed: _togglePasswordVisibility,
                           ),
                         ),
@@ -312,7 +356,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         ),
                         child: const Text(
                           'Create Account',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],

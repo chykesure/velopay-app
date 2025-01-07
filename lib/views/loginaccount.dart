@@ -24,7 +24,6 @@ class _LoginAccountState extends State<LoginAccount> {
     });
   }
 
-  // Function to handle user login
   Future<void> _loginUser() async {
     final String email = _emailController.text.trim();
     final String password = _passwordController.text.trim();
@@ -39,14 +38,15 @@ class _LoginAccountState extends State<LoginAccount> {
       _isLoading = true;
     });
 
-    const String apiUrl = "http://10.0.2.2/myapi/login.php"; // Replace with your actual API URL
+    //const String apiUrl = "http://10.0.2.2/myapi/login.php"; // Ensure the correct API URL
+    const String apiUrl = "https://swiftsendify.com/velopay_api/login.php";
 
     try {
       final response = await http.post(
         Uri.parse(apiUrl),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'email': email,
+          'email': email, // Ensure that these parameters are included
           'password': password,
         }),
       );
@@ -57,27 +57,20 @@ class _LoginAccountState extends State<LoginAccount> {
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
 
-        // If login is successful
+        // Check the response from the API
         if (responseBody['message'] == 'Login successful') {
           _showSnackbar('Login successful. Welcome!');
-
-          // Navigate to homepage
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const HomePage()),
           );
-        } 
-        // Handle invalid password case
-        else if (responseBody['message'] == 'Invalid password') {
+        } else if (responseBody['message'] == 'Invalid password') {
           _showSnackbar('Incorrect password. Please try again.');
-        } 
-        // Handle case where email doesn't exist
-        else if (responseBody['message'] == 'Email not found') {
+        } else if (responseBody['message'] == 'User not found') {
           _showSnackbar('Email not registered. Please create an account.');
-        } 
-        // General error handling
-        else {
-          _showSnackbar(responseBody['message'] ?? 'Login failed. Please try again.');
+        } else {
+          _showSnackbar(
+              responseBody['message'] ?? 'Login failed. Please try again.');
         }
       } else {
         _showSnackbar('An error occurred. Please try again.');
@@ -133,8 +126,10 @@ class _LoginAccountState extends State<LoginAccount> {
             ),
             Expanded(
               child: Container(
-                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
-                padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.75),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -152,15 +147,18 @@ class _LoginAccountState extends State<LoginAccount> {
                         style: const TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           labelText: 'Email',
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          labelStyle: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
                           hintText: 'Enter your email address',
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(color: Colors.grey, width: 2.0),
+                            borderSide: const BorderSide(
+                                color: Colors.grey, width: 2.0),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(color: Colors.orange, width: 2.0),
+                            borderSide: const BorderSide(
+                                color: Colors.orange, width: 2.0),
                           ),
                           prefixIcon: const Icon(Icons.email),
                         ),
@@ -172,19 +170,24 @@ class _LoginAccountState extends State<LoginAccount> {
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                          labelStyle: const TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.black),
                           hintText: 'Enter your password',
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(color: Colors.grey, width: 2.0),
+                            borderSide: const BorderSide(
+                                color: Colors.grey, width: 2.0),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(color: Colors.orange, width: 2.0),
+                            borderSide: const BorderSide(
+                                color: Colors.orange, width: 2.0),
                           ),
                           prefixIcon: const Icon(Icons.lock),
                           suffixIcon: IconButton(
-                            icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+                            icon: Icon(_obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility),
                             onPressed: _togglePasswordVisibility,
                           ),
                         ),
@@ -200,10 +203,12 @@ class _LoginAccountState extends State<LoginAccount> {
                           ),
                         ),
                         child: _isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
                             : const Text(
                                 'Login',
-                                style: TextStyle(fontSize: 18, color: Colors.white),
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white),
                               ),
                       ),
                       const SizedBox(height: 20),
@@ -211,12 +216,14 @@ class _LoginAccountState extends State<LoginAccount> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const CreateAccount()),
+                            MaterialPageRoute(
+                                builder: (context) => const CreateAccount()),
                           );
                         },
                         child: const Text(
                           "Don't have an account? Sign up",
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
