@@ -17,8 +17,8 @@ class SelectOperator extends StatefulWidget {
 class _SelectOperatorState extends State<SelectOperator> {
   int _selectedIndex = 0;
   String? _selectedNetwork = 'MTN';
-  String? _selectedPaymentMethod = 'Payment Method 1';
-  String? _selectedSourceAccount = 'Source Account 1';
+  String? _selectedPaymentMethod = 'Select Data Plan';
+  String? _selectedSourceAccount = 'Select Airtime Plan';
   final TextEditingController _phoneController = TextEditingController();
   bool _saveTopup = false;
   bool _scheduleTopup = false;
@@ -97,9 +97,11 @@ class _SelectOperatorState extends State<SelectOperator> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                _buildPaymentMethodOption('Payment Method 1'),
-                _buildPaymentMethodOption('Payment Method 2'),
-                _buildPaymentMethodOption('Payment Method 3'),
+              _buildPaymentMethodOption('1GB for 300'),
+              _buildPaymentMethodOption('500MB for 200'),
+              _buildPaymentMethodOption('2GB for 600'),
+              _buildPaymentMethodOption('3GB for 900'),
+              _buildPaymentMethodOption('Unlimited for 1500'),
               ],
             ),
           ),
@@ -123,9 +125,11 @@ class _SelectOperatorState extends State<SelectOperator> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                _buildSourceAccountOption('Source Account 1'),
-                _buildSourceAccountOption('Source Account 2'),
-                _buildSourceAccountOption('Source Account 3'),
+                _buildSourceAccountOption('Airtime 100'),
+              _buildSourceAccountOption('Airtime 200'),
+              _buildSourceAccountOption('Airtime 500'),
+              _buildSourceAccountOption('Airtime 1000'),
+              _buildSourceAccountOption('Airtime 2000'),
               ],
             ),
           ),
@@ -237,16 +241,13 @@ class _SelectOperatorState extends State<SelectOperator> {
                       ),
                       const SizedBox(height: 20),
                       _buildPhoneNumberInput(),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 80),
                       _buildAmountInput(),
                       const SizedBox(height: 20),
                       _buildPaymentMethodInput(),
                       const SizedBox(height: 20),
                       _buildSourceAccountInput(),
-                      const SizedBox(height: 20),
-                      _buildSaveTopupSwitch(),
-                      _buildScheduleTopupSwitch(),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 90),
                       _buildBuyAirtimeButton(),
                     ],
                   ),
@@ -438,37 +439,9 @@ class _SelectOperatorState extends State<SelectOperator> {
     );
   }
 
-  Widget _buildSaveTopupSwitch() {
-    return SwitchListTile(
-      title: const Text(
-        'Save this topup',
-        style: TextStyle(color: Colors.black),
-      ),
-      value: _saveTopup,
-      onChanged: (bool value) {
-        setState(() {
-          _saveTopup = value;
-        });
-      },
-      activeColor: Colors.orange,
-    );
-  }
+  
 
-  Widget _buildScheduleTopupSwitch() {
-    return SwitchListTile(
-      title: const Text(
-        'Schedule this airtime topup',
-        style: TextStyle(color: Colors.black),
-      ),
-      value: _scheduleTopup,
-      onChanged: (bool value) {
-        setState(() {
-          _scheduleTopup = value;
-        });
-      },
-      activeColor: Colors.orange,
-    );
-  }
+  
 
   Widget _buildBuyAirtimeButton() {
     return SizedBox(
@@ -488,7 +461,7 @@ class _SelectOperatorState extends State<SelectOperator> {
           );
         },
         child: const Text(
-          'Buy Airtime',
+          'Continue',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,

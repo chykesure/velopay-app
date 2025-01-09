@@ -25,6 +25,9 @@ dev_dependencies:
 
 flutter:
   assets:
+    - images/sp3.jpg
+    - images/VP.png
+    - images/sp.jpg
     - images/sp1.jpg
     - images/sp2.jpg
     - images/pas.jpg

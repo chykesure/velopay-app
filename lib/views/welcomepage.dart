@@ -177,7 +177,7 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 40,
-                top: 720,
+                top: 650, // Adjusted from 720
                 child: GestureDetector(
                   onTap: () {
                     // Navigate to sign up screen
@@ -220,7 +220,7 @@ class Onboarding extends StatelessWidget {
               ),
               Positioned(
                 left: 40,
-                top: 770,
+                top: 720, // Adjusted from 770
                 child: GestureDetector(
                   onTap: () {
                     // Navigate to log in screen
@@ -236,8 +236,14 @@ class Onboarding extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 15),
                     decoration: ShapeDecoration(
+                      color: Colors.white, // Set the background color
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6),
+                        side: BorderSide(
+                          color: const Color(
+                              0xFFFF8E00), // Border color same as sign up button
+                          width: 1, // Set the width of the border
+                        ),
                       ),
                     ),
                     child: const Row(

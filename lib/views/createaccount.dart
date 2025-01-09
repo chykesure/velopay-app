@@ -357,7 +357,11 @@ class _CreateAccountState extends State<CreateAccount> {
                         child: const Text(
                           'Create Account',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors
+                                .white, // Corrected from Color.white to Colors.white
+                          ),
                         ),
                       ),
                     ],

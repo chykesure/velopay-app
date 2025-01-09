@@ -186,7 +186,7 @@ class _AccountPageState extends State<AccountPage>
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               // Menu Buttons Section
               Expanded(
                 child: Container(
@@ -202,27 +202,18 @@ class _AccountPageState extends State<AccountPage>
                   child: ListView(
                     children: [
                       _buildMenuItem(Icons.person, "Personal details", 0, () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PersonalDetails()),
-                        );
+                        print("Personal details methods pressed");
                       }),
                       _buildMenuItem(Icons.payment, "Payment methods", 1, () {
-                        // Action for Payment methods
                         print("Payment methods pressed");
-                        // Navigate to Payment methods screen or perform another action
+                        // You can also call your modal or navigation to another screen
                       }),
                       _buildMenuItem(Icons.history, "Transactions", 2, () {
-                        // Action for Transactions
                         print("Transactions pressed");
-                        // Navigate to Transactions screen or perform another action
                       }),
                       _buildMenuItem(Icons.notifications, "Notifications", 3,
                           () {
-                        // Action for Notifications
                         print("Notifications pressed");
-                        // Navigate to Notifications screen or perform another action
                       }),
                     ],
                   ),
@@ -340,6 +331,8 @@ class _AccountPageState extends State<AccountPage>
       ),
     );
   }
+
+
 
   // Navigation Item Builder
   Widget _buildNavItem(IconData icon, int index) {
